@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>E Waste to Smart Products Creative PPT-1 - Presentation Viewer</title>
+<style>
+
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --primary: #2563eb;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --tag-bg: #eff6ff;
+  --tag-text: #1d4ed8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text-main);
+  line-height: 1.65;
+  padding: 18px;
+}
+.preview-container {
+  max-width: 960px;
+  margin: 0 auto;
+  background: var(--surface);
+  border-radius: 14px;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.doc-header {
+  padding: 22px 30px 16px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(to bottom, #ffffff, #fbfcfe);
+}
+.badge-pill {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.doc-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+.doc-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.meta-item strong { color: var(--text-main); }
+.actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 30px;
+  background: #f8fafc;
+  border-bottom: 1px solid var(--border);
+}
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-main);
+  text-decoration: none;
+  cursor: pointer;
+}
+.doc-body {
+  padding: 28px 30px;
+  font-size: 14.5px;
+}
+.doc-body h1 {
+  font-size: 19px;
+  font-weight: 700;
+  margin: 26px 0 10px;
+  color: #1e293b;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 6px;
+}
+.doc-body h2 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 20px 0 8px;
+  color: #334155;
+}
+.doc-body h3 {
+  font-size: 14.5px;
+  font-weight: 600;
+  margin: 14px 0 6px;
+  color: #475569;
+}
+.doc-body p {
+  margin-bottom: 12px;
+  color: #334155;
+  text-align: justify;
+}
+.doc-body ul, .doc-body ol {
+  margin: 10px 0 14px 22px;
+  color: #334155;
+}
+.doc-body li { margin-bottom: 5px; }
+.doc-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+  margin: 16px auto;
+  border: 1px solid var(--border);
+}
+.fig-caption {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: -8px;
+  margin-bottom: 14px;
+}
+.table-wrapper {
+  overflow-x: auto;
+  margin: 16px 0 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+th {
+  background: #f1f5f9;
+  color: #1e293b;
+  font-weight: 600;
+  padding: 9px 12px;
+  border-bottom: 2px solid var(--border);
+}
+td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  color: #334155;
+}
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) td { background: #fafbfc; }
+
+/* Tabs for XLSX */
+.sheet-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 12px 30px;
+  background: #f1f5f9;
+  border-bottom: 1px solid var(--border);
+}
+.sheet-tab {
+  padding: 6px 14px;
+  background: #e2e8f0;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  border: none;
+  color: #334155;
+}
+.sheet-tab.active {
+  background: var(--primary);
+  color: white;
+}
+.sheet-content { display: none; padding: 24px 30px; }
+.sheet-content.active { display: block; }
+
+.slide-card.active { display: flex !important; }
+.nav-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.nav-btn:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+}
+</style>
+<script>
+let curSlide = 0;
+const total = 7;
+function showSlide(idx) {
+  if (idx < 0 || idx >= total) return;
+  curSlide = idx;
+  document.querySelectorAll('.slide-card').forEach((s, i) => s.classList.toggle('active', i === curSlide));
+  document.getElementById('prevBtn').disabled = curSlide === 0;
+  document.getElementById('nextBtn').disabled = curSlide === total - 1;
+  document.getElementById('slideIndicator').textContent = (curSlide + 1) + ' / ' + total;
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') showSlide(curSlide + 1);
+  if (e.key === 'ArrowLeft') showSlide(curSlide - 1);
+});
+</script>
+</head>
+<body>
+<div class="preview-container">
+  <div class="doc-header">
+    <span class="badge-pill" style="background:#fff7ed;color:#c2410c;">Pitch Deck (.pptx)</span>
+    <h1 class="doc-title">E Waste to Smart Products Creative PPT-1</h1>
+    <div class="doc-meta">
+      <div class="meta-item">Author: <strong>Onkar Shelke</strong> (25102C2002)</div>
+      <div class="meta-item">Topic: <strong>Novel Idea Pitch Deck</strong></div>
+    </div>
+  </div>
+  <div class="actions-bar">
+    <span style="font-size:12px;color:#64748b;">Direct slide presentation · Use Left / Right keys</span>
+    <a class="btn-action" href="../assignment-files/E_Waste_to_Smart_Products_Creative_PPT-1.pptx" download>Download PPTX</a>
+  </div>
+  <div class="doc-body">
+    
+        <div class="slide-card active" id="slide_0" style="min-height:360px;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:32px;display:none;flex-direction:column;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,0.03);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <span style="font-size:11px;font-weight:700;color:#2563eb;text-transform:uppercase;letter-spacing:1px;">Slide 1 of 7</span>
+            <span style="font-size:12px;color:#64748b;">E-Waste to Smart Products Pitch Deck</span>
+          </div>
+          <h2 style="font-size:24px;font-weight:800;color:#0f172a;margin-bottom:8px;">E-WASTE</h2>
+          <p style="font-size:16px;color:#475569;margin-bottom:16px;font-weight:500;">TO SMART</p>
+          <ul style="margin-left:20px;margin-top:10px;"><li style="margin-bottom:8px;font-size:15px;color:#334155;">PRODUCTS</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Turning discarded electronics into affordable products — and waste into value.</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">♻</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">⚡</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">🔧</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">📱</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">NOVEL BUSINESS IDEA</li></ul>
+        </div>
+        
+        <div class="slide-card" id="slide_1" style="min-height:360px;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:32px;display:none;flex-direction:column;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,0.03);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <span style="font-size:11px;font-weight:700;color:#2563eb;text-transform:uppercase;letter-spacing:1px;">Slide 2 of 7</span>
+            <span style="font-size:12px;color:#64748b;">E-Waste to Smart Products Pitch Deck</span>
+          </div>
+          <h2 style="font-size:24px;font-weight:800;color:#0f172a;margin-bottom:8px;">02</h2>
+          <p style="font-size:16px;color:#475569;margin-bottom:16px;font-weight:500;">The Novel Idea</p>
+          <ul style="margin-left:20px;margin-top:10px;"><li style="margin-bottom:8px;font-size:15px;color:#334155;">Give old electronics a second life.</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">COLLECT</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Old phones, laptops, batteries, speakers and electronic components.</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">RECOVER</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Test devices and recover components that still have useful life.</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">CREATE</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Upcycle components into affordable smart and educational products.</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Examples:  Old smartphones → CCTV   •   Old speakers → Bluetooth speakers   •   Components → STEM kits</li></ul>
+        </div>
+        
+        <div class="slide-card" id="slide_2" style="min-height:360px;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:32px;display:none;flex-direction:column;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,0.03);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <span style="font-size:11px;font-weight:700;color:#2563eb;text-transform:uppercase;letter-spacing:1px;">Slide 3 of 7</span>
+            <span style="font-size:12px;color:#64748b;">E-Waste to Smart Products Pitch Deck</span>
+          </div>
+          <h2 style="font-size:24px;font-weight:800;color:#0f172a;margin-bottom:8px;">03</h2>
+          <p style="font-size:16px;color:#475569;margin-bottom:16px;font-weight:500;">The Problem</p>
+          <ul style="margin-left:20px;margin-top:10px;"><li style="margin-bottom:8px;font-size:15px;color:#334155;">Why does e-waste need a new approach?</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Useful parts are wasted</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Many discarded devices still contain working components.</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">01</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Unsafe disposal</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Improper e-waste disposal can harm the environment.</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">02</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Value is lost</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Recoverable materials and components are thrown away.</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">03</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Products cost more</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Affordable electronics are still out of reach for some users.</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">04</li></ul>
+        </div>
+        
+        <div class="slide-card" id="slide_3" style="min-height:360px;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:32px;display:none;flex-direction:column;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,0.03);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <span style="font-size:11px;font-weight:700;color:#2563eb;text-transform:uppercase;letter-spacing:1px;">Slide 4 of 7</span>
+            <span style="font-size:12px;color:#64748b;">E-Waste to Smart Products Pitch Deck</span>
+          </div>
+          <h2 style="font-size:24px;font-weight:800;color:#0f172a;margin-bottom:8px;">04</h2>
+          <p style="font-size:16px;color:#475569;margin-bottom:16px;font-weight:500;">Our Solution</p>
+          <ul style="margin-left:20px;margin-top:10px;"><li style="margin-bottom:8px;font-size:15px;color:#334155;">A circular process that turns waste into products.</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">01</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">COLLECT</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Homes • Colleges • Offices • Shops</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">→</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">02</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">SORT &amp; TEST</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Reusable vs. non-reusable</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">→</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">03</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">UPCycle</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Repair • Combine • Rebuild</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">→</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">04</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">QUALITY CHECK</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Safety and performance testing</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">→</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">05</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">SELL / RECYCLE</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Sell products; recycle the rest safely</li></ul>
+        </div>
+        
+        <div class="slide-card" id="slide_4" style="min-height:360px;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:32px;display:none;flex-direction:column;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,0.03);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <span style="font-size:11px;font-weight:700;color:#2563eb;text-transform:uppercase;letter-spacing:1px;">Slide 5 of 7</span>
+            <span style="font-size:12px;color:#64748b;">E-Waste to Smart Products Pitch Deck</span>
+          </div>
+          <h2 style="font-size:24px;font-weight:800;color:#0f172a;margin-bottom:8px;">05</h2>
+          <p style="font-size:16px;color:#475569;margin-bottom:16px;font-weight:500;">Revenue Generation</p>
+          <ul style="margin-left:20px;margin-top:10px;"><li style="margin-bottom:8px;font-size:15px;color:#334155;">Multiple income streams make the model sustainable.</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">PRODUCT SALES</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Sell refurbished and upcycled smart products.</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">E-WASTE SERVICES</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Charge organizations for collection and e-waste management.</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">STEM KITS</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Sell educational electronics kits to schools and colleges.</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">REFURBISHMENT</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Repair and upgrade old devices for customers.</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">RECYCLING PARTNERS</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Supply unusable components to authorized recyclers.</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">CORE REVENUE</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Product sales + service fees</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">GROWTH</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">More collection → more products</li></ul>
+        </div>
+        
+        <div class="slide-card" id="slide_5" style="min-height:360px;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:32px;display:none;flex-direction:column;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,0.03);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <span style="font-size:11px;font-weight:700;color:#2563eb;text-transform:uppercase;letter-spacing:1px;">Slide 6 of 7</span>
+            <span style="font-size:12px;color:#64748b;">E-Waste to Smart Products Pitch Deck</span>
+          </div>
+          <h2 style="font-size:24px;font-weight:800;color:#0f172a;margin-bottom:8px;">06</h2>
+          <p style="font-size:16px;color:#475569;margin-bottom:16px;font-weight:500;">Revenue Pathway</p>
+          <ul style="margin-left:20px;margin-top:10px;"><li style="margin-bottom:8px;font-size:15px;color:#334155;">From discarded electronics to business value.</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">E-WASTE</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Collect</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">→</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">COMPONENTS</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Recover</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">→</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">PRODUCTS</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Create</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">→</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">CUSTOMERS</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Sell</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">→</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">REVENUE</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">Earn</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">COLLECT  →  RECOVER  →  UPCYCLE  →  SELL  →  GENERATE PROFIT</li></ul>
+        </div>
+        
+        <div class="slide-card" id="slide_6" style="min-height:360px;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:32px;display:none;flex-direction:column;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,0.03);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <span style="font-size:11px;font-weight:700;color:#2563eb;text-transform:uppercase;letter-spacing:1px;">Slide 7 of 7</span>
+            <span style="font-size:12px;color:#64748b;">E-Waste to Smart Products Pitch Deck</span>
+          </div>
+          <h2 style="font-size:24px;font-weight:800;color:#0f172a;margin-bottom:8px;">THE BIG IDEA</h2>
+          <p style="font-size:16px;color:#475569;margin-bottom:16px;font-weight:500;">Waste is not the end.</p>
+          <ul style="margin-left:20px;margin-top:10px;"><li style="margin-bottom:8px;font-size:15px;color:#334155;">It is the raw material for the next product.</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">E-Waste to Smart Products combines sustainability, affordability and business opportunity.</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">COLLECT  •  REUSE  •  UPCYCLE  •  SELL  •  RECYCLE</li><li style="margin-bottom:8px;font-size:15px;color:#334155;">THANK YOU</li></ul>
+        </div>
+        
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;">
+      <button id="prevBtn" class="nav-btn" disabled onclick="showSlide(curSlide - 1)">← Previous</button>
+      <span id="slideIndicator" style="font-weight:700;color:#1e293b;">1 / 7</span>
+      <button id="nextBtn" class="nav-btn" onclick="showSlide(curSlide + 1)">Next →</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>

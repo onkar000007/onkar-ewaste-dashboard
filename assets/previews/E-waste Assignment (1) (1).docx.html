@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>E-waste Assignment (1) (1) - Document Viewer</title>
+<style>
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --primary: #2563eb;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --tag-bg: #eff6ff;
+  --tag-text: #1d4ed8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text-main);
+  line-height: 1.65;
+  padding: 18px;
+}
+.preview-container {
+  max-width: 960px;
+  margin: 0 auto;
+  background: var(--surface);
+  border-radius: 14px;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.doc-header {
+  padding: 22px 30px 16px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(to bottom, #ffffff, #fbfcfe);
+}
+.badge-pill {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.doc-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+.doc-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.meta-item strong { color: var(--text-main); }
+.actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 30px;
+  background: #f8fafc;
+  border-bottom: 1px solid var(--border);
+}
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-main);
+  text-decoration: none;
+  cursor: pointer;
+}
+.doc-body {
+  padding: 28px 30px;
+  font-size: 14.5px;
+}
+.doc-body h1 {
+  font-size: 19px;
+  font-weight: 700;
+  margin: 26px 0 10px;
+  color: #1e293b;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 6px;
+}
+.doc-body h2 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 20px 0 8px;
+  color: #334155;
+}
+.doc-body h3 {
+  font-size: 14.5px;
+  font-weight: 600;
+  margin: 14px 0 6px;
+  color: #475569;
+}
+.doc-body p {
+  margin-bottom: 12px;
+  color: #334155;
+  text-align: justify;
+}
+.doc-body ul, .doc-body ol {
+  margin: 10px 0 14px 22px;
+  color: #334155;
+}
+.doc-body li { margin-bottom: 5px; }
+.doc-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+  margin: 16px auto;
+  border: 1px solid var(--border);
+}
+.fig-caption {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: -8px;
+  margin-bottom: 14px;
+}
+.table-wrapper {
+  overflow-x: auto;
+  margin: 16px 0 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+th {
+  background: #f1f5f9;
+  color: #1e293b;
+  font-weight: 600;
+  padding: 9px 12px;
+  border-bottom: 2px solid var(--border);
+}
+td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  color: #334155;
+}
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) td { background: #fafbfc; }
+
+/* Tabs for XLSX */
+.sheet-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 12px 30px;
+  background: #f1f5f9;
+  border-bottom: 1px solid var(--border);
+}
+.sheet-tab {
+  padding: 6px 14px;
+  background: #e2e8f0;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  border: none;
+  color: #334155;
+}
+.sheet-tab.active {
+  background: var(--primary);
+  color: white;
+}
+.sheet-content { display: none; padding: 24px 30px; }
+.sheet-content.active { display: block; }
+</style>
+</head>
+<body>
+<div class="preview-container">
+  <div class="doc-header">
+    <span class="badge-pill">Word Document (.docx)</span>
+    <h1 class="doc-title">E-waste Assignment (1) (1)</h1>
+    <div class="doc-meta">
+      <div class="meta-item">Author: <strong>Onkar Shelke</strong> (25102C2002)</div>
+      <div class="meta-item">Semester: <strong>5 (TE CMPN) · VIT Mumbai</strong></div>
+    </div>
+  </div>
+  <div class="actions-bar">
+    <span style="font-size:12px;color:#64748b;">Direct in-dashboard preview · No download needed</span>
+    <div>
+      <a class="btn-action" href="../assignment-files/E-waste Assignment (1) (1).docx" download>Download Original</a>
+      <button class="btn-action" onclick="window.print()">Print / PDF</button>
+    </div>
+  </div>
+  <div class="doc-body"><p>Title: Hydrothermal Bio-Buffering — Integration of  Biometallurgy</p><img src="media/E_waste_Assignm_imagerId1.jpeg" alt="Document Figure"><h1>Figure 1: The perspective view</h1><p class="fig-caption">Figure 1 illustrates the updated hydrothermal buffering process with biometallurgy (bioleaching) integrated as a new stage. The main objective of this update is to biologically pre-treat the contaminated sample using metal-tolerant microorganisms before the hydrothermal extraction step, reducing the chemical and energy load of the overall process. As shown in the figure, the process now flows through eight stages instead of seven — sample collection, sample preparation, bioleaching, buffer preparation, hydrothermal extraction, cooling &amp; separation, element recovery, and final products — with the biological and chemical stages visually distinguished by color.</p><p>Changes made:</p><p>Added a new step — Bioleaching (Biometallurgy) — between sample preparation and buffer preparation, where metal-tolerant bacteria/fungi biologically solubilize bound metals</p><p>Renamed the process from &quot;Hydrothermal Buffering&quot; to &quot;Hydrothermal Bio-Buffering&quot;</p><p>Added biosorption as a new metal recovery method, alongside precipitation, solvent extraction, and electrowinning Added a new section listing 5 biometallurgy agents used and their function:</p><p>Acidithiobacillus ferrooxidans — oxidizes Fe/S minerals Acidithiobacillus thiooxidans — produces sulfuric acid for leaching Aspergillus niger — fungal leacher, secretes organic acids Cupriavidus metallidurans — metal-resistant bacteria</p><p>Algal/fungal biomass — biosorbent for recovery stage</p><p>Updated the overall process flow diagram to show bioleaching and bio/chem recovery as distinct stages Added a new benefit: &quot;Lower chemical &amp; energy use&quot;</p><p>Redesigned the poster in a clean, minimalist single-accent-color theme</p><p>Onkar Shelke,  25102C2002 , Dept. of Computer Engineering, VIT</p></div>
+</div>
+</body>
+</html>

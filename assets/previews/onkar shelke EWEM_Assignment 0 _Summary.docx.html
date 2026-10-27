@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>onkar shelke EWEM Assignment 0  Summary - Document Viewer</title>
+<style>
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --primary: #2563eb;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --tag-bg: #eff6ff;
+  --tag-text: #1d4ed8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text-main);
+  line-height: 1.65;
+  padding: 18px;
+}
+.preview-container {
+  max-width: 960px;
+  margin: 0 auto;
+  background: var(--surface);
+  border-radius: 14px;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.doc-header {
+  padding: 22px 30px 16px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(to bottom, #ffffff, #fbfcfe);
+}
+.badge-pill {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.doc-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+.doc-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.meta-item strong { color: var(--text-main); }
+.actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 30px;
+  background: #f8fafc;
+  border-bottom: 1px solid var(--border);
+}
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-main);
+  text-decoration: none;
+  cursor: pointer;
+}
+.doc-body {
+  padding: 28px 30px;
+  font-size: 14.5px;
+}
+.doc-body h1 {
+  font-size: 19px;
+  font-weight: 700;
+  margin: 26px 0 10px;
+  color: #1e293b;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 6px;
+}
+.doc-body h2 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 20px 0 8px;
+  color: #334155;
+}
+.doc-body h3 {
+  font-size: 14.5px;
+  font-weight: 600;
+  margin: 14px 0 6px;
+  color: #475569;
+}
+.doc-body p {
+  margin-bottom: 12px;
+  color: #334155;
+  text-align: justify;
+}
+.doc-body ul, .doc-body ol {
+  margin: 10px 0 14px 22px;
+  color: #334155;
+}
+.doc-body li { margin-bottom: 5px; }
+.doc-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+  margin: 16px auto;
+  border: 1px solid var(--border);
+}
+.fig-caption {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: -8px;
+  margin-bottom: 14px;
+}
+.table-wrapper {
+  overflow-x: auto;
+  margin: 16px 0 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+th {
+  background: #f1f5f9;
+  color: #1e293b;
+  font-weight: 600;
+  padding: 9px 12px;
+  border-bottom: 2px solid var(--border);
+}
+td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  color: #334155;
+}
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) td { background: #fafbfc; }
+
+/* Tabs for XLSX */
+.sheet-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 12px 30px;
+  background: #f1f5f9;
+  border-bottom: 1px solid var(--border);
+}
+.sheet-tab {
+  padding: 6px 14px;
+  background: #e2e8f0;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  border: none;
+  color: #334155;
+}
+.sheet-tab.active {
+  background: var(--primary);
+  color: white;
+}
+.sheet-content { display: none; padding: 24px 30px; }
+.sheet-content.active { display: block; }
+</style>
+</head>
+<body>
+<div class="preview-container">
+  <div class="doc-header">
+    <span class="badge-pill">Word Document (.docx)</span>
+    <h1 class="doc-title">onkar shelke EWEM Assignment 0  Summary</h1>
+    <div class="doc-meta">
+      <div class="meta-item">Author: <strong>Onkar Shelke</strong> (25102C2002)</div>
+      <div class="meta-item">Semester: <strong>5 (TE CMPN) · VIT Mumbai</strong></div>
+    </div>
+  </div>
+  <div class="actions-bar">
+    <span style="font-size:12px;color:#64748b;">Direct in-dashboard preview · No download needed</span>
+    <div>
+      <a class="btn-action" href="../assignment-files/onkar shelke EWEM_Assignment 0 _Summary.docx" download>Download Original</a>
+      <button class="btn-action" onclick="window.print()">Print / PDF</button>
+    </div>
+  </div>
+  <div class="doc-body"><h1>EXPERIMENT</h1><p><strong>E-Waste and Environmental Management</strong></p><p><em>Semester V – Computer Engineering</em></p><p><em>Name – onkar shelke</em></p><p><em>Roll no- 25102C2002</em></p><p><em>CMPN C</em></p><h1>1. Aim</h1><p>To study the concept of electronic waste (e-waste), its environmental and health impacts, methods of recycling and resource recovery, and the rules and technologies used for its safe management.</p><h1>2. Objectives</h1><ul><li>Understand the meaning, sources, and hazards of e-waste.</li></ul><ul><li>Study safe disposal, recycling, and recovery of useful materials from discarded electronic products.</li></ul><ul><li>Understand the health risks faced by workers and communities due to unsafe recycling practices.</li></ul><ul><li>Review Indian and international rules, conventions, and standards related to e-waste and environmental protection.</li></ul><ul><li>Explore environmental technologies and practices such as green buildings, carbon credits, disaster management, remote sensing, and GIS.</li></ul><ul><li>Develop awareness of sustainable practices that can be applied in daily life.</li></ul><h1>3. Introduction</h1><p>E-waste refers to discarded electrical and electronic equipment such as computers, mobile phones, televisions, refrigerators, and charging cables. Increasing use of electronic devices makes proper collection, handling, recycling, and disposal important. E-waste may contain useful materials as well as hazardous substances. If it is dismantled or discarded carelessly, pollutants can affect air, soil, water, human health, and ecosystems. Proper management helps reduce these risks and allows valuable materials to be recovered and reused.</p><h1>4. Major Topics Covered</h1><div class="table-wrapper"><table><tr><th>Module</th><th>Summary</th></tr><tr><td>1. Overview of E-waste and its Management</td><td>Sources and types of e-waste, hazardous substances, health and environmental impacts, household disposal, safe-management guidelines, and occupational health concerns in India.</td></tr><tr><td>2. E-waste Recycling</td><td>Recycling stages, mechanical processing, recovery of materials, and extraction of valuable metals and other resources.</td></tr><tr><td>3. Pollutant Exposure and Health Risks</td><td>How pollutants from recycling reach air, soil, water, workers, and the public; environmental and public-health effects; and health-risk reduction.</td></tr><tr><td>4. E-waste Management Rules</td><td>Indian rules and regulations, including the 2008 Hazardous Waste Rules and the 2011 and 2016 e-waste rules, along with international conventions and the EU WEEE and RoHS directives.</td></tr><tr><td>5. Technologies for Environmental Problems</td><td>Green buildings, indoor air pollutants, carbon credits, earthquake and flood disaster management, and the use of remote sensing and GIS in environmental applications.</td></tr><tr><td>6. Environmental Assessment and Management</td><td>Environmental Impact Assessment (EIA), environmental audits, eco-labelling, ISO standards, pollution-control legislation, Pollution Control Boards, and environmental clearance/consent procedures.</td></tr></table></div><h1>5. Recycling and Resource Recovery</h1><p>The recycling process aims to collect and separate discarded electronic equipment, dismantle it safely, sort its components, and recover reusable materials. Mechanical processing and suitable advanced recovery methods can help extract metals such as copper, gold, and palladium. Effective recycling reduces the amount of waste sent to landfills, conserves natural resources, and supports sustainable resource use. Such work should be carried out using appropriate safety procedures and environmentally sound technologies.</p><h1>6. Environmental and Health Impacts</h1><p>Unsafe handling of e-waste can release hazardous substances, including lead, mercury, and cadmium. Exposure may occur through contaminated air, dust, soil, or water. Informal dismantling and crude recycling can put workers and nearby communities at risk. Preventive measures include safer recycling processes, protective equipment, proper collection and treatment systems, awareness, monitoring, and compliance with applicable regulations.</p><h1>7. Rules and Environmental Management</h1><p>The course reviews Indian e-waste management regulations and international approaches such as the Basel, Bamako, and Rotterdam Conventions, along with the European Union’s WEEE and RoHS directives. It also introduces environmental assessment, eco-labelling, ISO standards, and the roles of the Central and State Pollution Control Boards. These measures support responsible handling of waste and help control environmental pollution.</p><h1>8. Learning Activities</h1><ul><li>Online quizzes and video-based learning tasks.</li></ul><ul><li>Personal and digital carbon-footprint calculation.</li></ul><ul><li>Device-anatomy activity to identify components, hazardous materials, recyclable parts, and recovery opportunities.</li></ul><ul><li>Case studies, class tests, and peer assessment.</li></ul><ul><li>Data analysis of e-waste generation using tools such as Python, Excel, or Tableau.</li></ul><ul><li>Sustainability reel or podcast, a green hackathon, and a campus e-waste audit with an awareness campaign.</li></ul><ul><li>Guest lectures, workshops, mini-projects, and a proposed industrial visit to an e-waste recycling company.</li></ul><h1>9. Expected Learning Outcomes</h1><ul><li>Explain e-waste and identify its major hazards.</li></ul><ul><li>Describe recycling technologies and the potential for resource recovery.</li></ul><ul><li>Recognize pollutant exposure pathways and assess related health risks.</li></ul><ul><li>Summarize important Indian and international e-waste regulations.</li></ul><ul><li>Explain selected environmental technologies and disaster-management approaches.</li></ul><ul><li>Understand the purpose of EIA, environmental audits, eco-labelling, ISO standards, and pollution-control authorities.</li></ul><h1>10. Conclusion</h1><p>E-waste and Environmental Management highlights the need to treat electronic waste as both an environmental concern and a source of recoverable resources. Safe collection, responsible consumer disposal, suitable recycling technologies, worker protection, public awareness, and compliance with environmental rules can reduce pollution and health risks. The course encourages students to apply these principles in daily life and contribute to a more sustainable environment.</p><h1>Reference</h1><p>Prepared as a summary of the course document: “Course Academic Administration Plan – E-Waste and Environmental Management, Semester V, 2026–27.”</p></div>
+</div>
+</body>
+</html>

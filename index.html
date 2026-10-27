@@ -1,0 +1,2060 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Onkar Shelke (25102C2002) | E-Waste Dashboard</title>
+<meta name="description" content="Onkar Shelke's Semester 5 coursework dashboard with instant in-dashboard document viewers, video player, and academic reviews.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<style>
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3), 0 0 40px rgba(16, 185, 129, 0.1); }
+  50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.5), 0 0 60px rgba(16, 185, 129, 0.2); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+:root {
+  --bg: #060d1b;
+  --bg-card: #0d1527;
+  --bg-card-hover: #131f3a;
+  --card-border: #1a2744;
+  --card-border-glow: #3b82f644;
+  --primary: #3b82f6;
+  --primary-glow: rgba(59, 130, 246, 0.35);
+  --emerald: #10b981;
+  --amber: #f59e0b;
+  --purple: #8b5cf6;
+  --rose: #f43f5e;
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --surface-glass: rgba(13, 21, 39, 0.88);
+  --modal-bg: rgba(6, 13, 27, 0.94);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text-main);
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  line-height: 1.55;
+  min-height: 100vh;
+  padding: 0;
+  background-image: 
+    radial-gradient(at 10% 10%, rgba(37, 99, 235, 0.12) 0px, transparent 50%),
+    radial-gradient(at 90% 20%, rgba(139, 92, 246, 0.08) 0px, transparent 50%),
+    radial-gradient(at 50% 80%, rgba(16, 185, 129, 0.06) 0px, transparent 50%);
+  background-attachment: fixed;
+}
+
+button, input, select { font-family: inherit; }
+
+.app-container {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 16px 20px 60px;
+}
+
+/* ===== STUDENT IDENTITY BAR (Always Visible) ===== */
+.student-identity-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  padding: 10px 24px;
+  background: linear-gradient(90deg, rgba(37,99,235,0.12), rgba(16,185,129,0.12), rgba(139,92,246,0.12));
+  background-size: 200% 100%;
+  animation: gradientShift 6s ease infinite;
+  border-bottom: 1px solid rgba(59, 130, 246, 0.15);
+  margin-bottom: 16px;
+  border-radius: 14px;
+}
+.student-identity-bar .student-name-bar {
+  font-size: 14px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+}
+.student-identity-bar .student-roll-bar {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: #60a5fa;
+  background: rgba(37, 99, 235, 0.15);
+  padding: 4px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(59, 130, 246, 0.25);
+}
+.student-identity-bar .student-dept-bar {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* ===== Header ===== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px;
+  background: var(--surface-glass);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  margin-bottom: 20px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.brand-icon {
+  width: 46px;
+  height: 46px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+  animation: float 4s ease-in-out infinite;
+}
+.brand-title {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  background: linear-gradient(90deg, #34d399, #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.brand-subtitle {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.badge-pill {
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 700;
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+.btn-review-hub {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: #fff;
+  border: 1px solid #60a5fa66;
+  padding: 9px 18px;
+  border-radius: 11px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+}
+.btn-review-hub:hover {
+  transform: translateY(-2px) scale(1.02);
+  filter: brightness(1.1);
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.5);
+}
+
+/* ===== Hero Section ===== */
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 28px;
+  background: linear-gradient(135deg, #081428 0%, #0c1f3d 50%, #0a1a30 100%);
+  border: 1px solid #1a3058;
+  border-radius: 24px;
+  padding: 36px 40px;
+  margin-bottom: 22px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.6);
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(59,130,246,0.3), transparent 40%, transparent 60%, rgba(16,185,129,0.3));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.eyebrow {
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  color: #34d399;
+  margin-bottom: 10px;
+}
+.hero h1 {
+  font-size: clamp(26px, 3.5vw, 36px);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.8px;
+  margin-bottom: 12px;
+}
+.hero h1 span {
+  background: linear-gradient(90deg, #60a5fa, #34d399);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero p {
+  color: #94a3b8;
+  font-size: 14px;
+  max-width: 560px;
+  margin-bottom: 18px;
+  line-height: 1.7;
+}
+.banner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #6ee7b7;
+  font-weight: 600;
+}
+
+/* ===== 3R Sustainability Component (Reduce, Reuse, Recycle) ===== */
+.sustainability-3r-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(16, 185, 129, 0.05);
+  border: 1px solid rgba(16, 185, 129, 0.22);
+  border-radius: 18px;
+  padding: 14px 18px;
+  margin-top: 14px;
+  box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.sustainability-3r-card:hover {
+  border-color: rgba(52, 211, 153, 0.45);
+  box-shadow: 0 12px 30px -6px rgba(16, 185, 129, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+.recycle-logo-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.recycle-symbol-circle {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #0d2822, #041412);
+  border: 2px solid rgba(52, 211, 153, 0.4);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 24px rgba(16, 185, 129, 0.35), inset 0 0 14px rgba(16, 185, 129, 0.2);
+  position: relative;
+  transition: all 0.4s ease;
+}
+.sustainability-3r-card:hover .recycle-symbol-circle {
+  box-shadow: 0 0 32px rgba(16, 185, 129, 0.55), inset 0 0 18px rgba(16, 185, 129, 0.3);
+  border-color: #34d399;
+}
+.recycle-svg {
+  width: 38px;
+  height: 38px;
+  filter: drop-shadow(0 2px 10px rgba(16, 185, 129, 0.5));
+  transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.sustainability-3r-card:hover .recycle-svg {
+  transform: rotate(120deg) scale(1.08);
+}
+.sustainability-3r-content {
+  flex: 1;
+  min-width: 0;
+}
+.sustainability-3r-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  gap: 8px;
+}
+.sustainability-title {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #34d399, #60a5fa, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.sustainability-tag {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+.sustainability-pills {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.r-pill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.25s ease;
+}
+.r-pill:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+.r-pill-reduce:hover {
+  border-color: #f59e0b;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.2);
+}
+.r-pill-reuse:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.2);
+}
+.r-pill-recycle:hover {
+  border-color: #10b981;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2);
+}
+.r-icon {
+  font-size: 15px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.r-name {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #f1f5f9;
+  line-height: 1.2;
+}
+.r-desc {
+  display: block;
+  font-size: 9.5px;
+  color: #94a3b8;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+/* ===== Profile Card (Hero Right) ===== */
+.profile-card {
+  align-self: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 28px;
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #3b82f6, #10b981);
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  font-weight: 800;
+  color: white;
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+  flex-shrink: 0;
+}
+.profile-info strong {
+  font-size: 22px;
+  display: block;
+  letter-spacing: -0.3px;
+  color: #ffffff;
+}
+.profile-info .roll-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  font-weight: 700;
+  color: #60a5fa;
+  display: inline-block;
+  background: rgba(59, 130, 246, 0.12);
+  padding: 3px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  margin-top: 4px;
+}
+.profile-info small {
+  color: #94a3b8;
+  font-size: 12px;
+  display: block;
+  margin-top: 4px;
+}
+.profile-meta {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 16px;
+  margin-top: 8px;
+}
+.meta-chip {
+  font-size: 12.5px;
+  color: #e2e8f0;
+  font-weight: 600;
+}
+.meta-chip span {
+  display: block;
+  font-size: 10px;
+  color: #64748b;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  margin-bottom: 2px;
+}
+
+/* Stats Row */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.stat-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary), var(--emerald));
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.stat-card:hover {
+  transform: translateY(-3px);
+  border-color: #3b82f644;
+  box-shadow: 0 8px 24px -6px rgba(0,0,0,0.4);
+}
+.stat-card:hover::after {
+  opacity: 1;
+}
+.stat-card b {
+  font-size: 28px;
+  font-weight: 800;
+  display: block;
+  line-height: 1.1;
+  margin-bottom: 4px;
+  letter-spacing: -0.5px;
+}
+.stat-card span {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.stat-pill {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Controls / Filter Bar */
+.filter-bar {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  background: var(--surface-glass);
+  padding: 14px 18px;
+  border-radius: 16px;
+  border: 1px solid var(--card-border);
+  margin-bottom: 22px;
+}
+.search-wrapper {
+  position: relative;
+  flex: 1;
+  min-width: 240px;
+}
+.search-wrapper input {
+  width: 100%;
+  background: #0b1120;
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 11px 16px 11px 40px;
+  color: var(--text-main);
+  font-size: 13.5px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search-wrapper input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary-glow);
+}
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+  font-size: 15px;
+}
+.filter-select {
+  background: #0b1120;
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 11px 14px;
+  color: var(--text-main);
+  font-size: 13px;
+  outline: none;
+  cursor: pointer;
+  min-width: 190px;
+}
+.filter-select:focus {
+  border-color: var(--primary);
+}
+
+/* Cards Grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #10b981);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.card:hover::before {
+  opacity: 1;
+}
+.card:hover {
+  background: var(--bg-card-hover);
+  border-color: #3b82f655;
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(59, 130, 246, 0.1);
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.card-id {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.card-points {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.1);
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+.card-title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+.card-due {
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.card-category {
+  font-size: 11.5px;
+  color: #93c5fd;
+  margin-bottom: 14px;
+}
+.card-files-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 6px 10px;
+  border-radius: 8px;
+  margin-top: auto;
+  margin-bottom: 16px;
+}
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+.btn-preview {
+  flex: 1;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+.btn-preview:hover {
+  background: #1d4ed8;
+  filter: brightness(1.1);
+}
+.btn-review-mini {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--card-border);
+  color: #cbd5e1;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-review-mini:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+}
+
+/* In-Dashboard Viewer Modal */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--modal-bg);
+  backdrop-filter: blur(14px);
+  z-index: 1000;
+  overflow-y: auto;
+  padding: 24px;
+}
+.modal-backdrop.open {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.modal-box {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 22px;
+  width: 100%;
+  max-width: 1100px;
+  height: 92vh;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255,255,255,0.06);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modalFadeIn 0.25s ease-out;
+}
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-header {
+  padding: 20px 28px;
+  background: #131d36;
+  border-bottom: 1px solid #1e2d4d;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.modal-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.modal-header-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.modal-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #ffffff;
+}
+.modal-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn-modal-close {
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  transition: background 0.15s;
+}
+.btn-modal-close:hover {
+  background: rgba(244, 63, 94, 0.3);
+  color: #f43f5e;
+}
+
+/* Tabs Bar */
+.modal-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 12px 28px;
+  background: #0e1628;
+  border-bottom: 1px solid #1e293b;
+  overflow-x: auto;
+}
+.modal-tab-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.modal-tab-btn:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.04);
+}
+.modal-tab-btn.active {
+  background: rgba(37, 99, 235, 0.18);
+  border-color: rgba(37, 99, 235, 0.4);
+  color: #60a5fa;
+  font-weight: 700;
+}
+
+/* File Selector Bar */
+.modal-file-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 28px;
+  background: #090e1a;
+  border-bottom: 1px solid #1e293b;
+  overflow-x: auto;
+}
+.file-chip {
+  background: #15223c;
+  border: 1px solid #1e335b;
+  color: #94a3b8;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s;
+}
+.file-chip:hover {
+  color: #fff;
+  border-color: #3b82f6;
+}
+.file-chip.active {
+  background: #2563eb;
+  border-color: #3b82f6;
+  color: #ffffff;
+}
+
+/* Modal Body Views */
+.modal-view {
+  display: none;
+  flex: 1;
+  padding: 0;
+  background: #ffffff;
+  min-height: 0;
+  overflow: hidden;
+}
+.modal-view.active {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Watch Container */
+.watch-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: #ffffff;
+  position: relative;
+}
+.watch-frame {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  border: none;
+  background: #ffffff;
+}
+.video-player-wrapper {
+  width: 100%;
+  flex: 1;
+  display: grid;
+  place-items: center;
+  background: #000;
+  padding: 20px;
+  min-height: 0;
+}
+.video-player-wrapper video {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+}
+.image-viewer-wrapper {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0b1120;
+  padding: 30px;
+  overflow: auto;
+  min-height: 0;
+}
+.image-viewer-wrapper img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  border: 1px solid #1e293b;
+}
+
+/* Info & Review Panes */
+.info-pane {
+  padding: 28px 32px;
+  color: #cbd5e1;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  background: #0b1120;
+}
+.info-section {
+  margin-bottom: 24px;
+}
+.info-section h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #60a5fa;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.info-section p {
+  color: #94a3b8;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Review Badge & Rubric */
+.review-score-banner {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(16, 185, 129, 0.15));
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.score-badge-large {
+  font-size: 32px;
+  font-weight: 800;
+  color: #34d399;
+  letter-spacing: -0.5px;
+}
+.review-list {
+  list-style: none;
+  margin: 10px 0;
+}
+.review-list li {
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: 10px;
+  font-size: 13.5px;
+  color: #cbd5e1;
+}
+.review-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #10b981;
+  font-weight: 800;
+}
+.review-tips li::before {
+  content: '💡';
+}
+
+/* Master Review Modal */
+.master-review-box {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 22px;
+  width: 100%;
+  max-width: 1020px;
+  padding: 36px;
+  color: #cbd5e1;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.review-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin: 22px 0;
+}
+.review-metric {
+  background: #141f36;
+  border: 1px solid #1e335b;
+  border-radius: 14px;
+  padding: 16px;
+}
+.review-metric b {
+  font-size: 26px;
+  display: block;
+  color: #38bdf8;
+  font-weight: 800;
+}
+.review-metric span {
+  font-size: 11.5px;
+  color: #94a3b8;
+}
+
+/* Responsive */
+@media(max-width: 950px) {
+  .hero { grid-template-columns: 1fr; }
+  .cards-grid { grid-template-columns: repeat(2, 1fr); }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .review-metric-grid { grid-template-columns: repeat(2, 1fr); }
+  .student-identity-bar { flex-direction: column; gap: 8px; text-align: center; }
+}
+@media(max-width: 600px) {
+  .cards-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: 1fr; }
+  .header { flex-direction: column; gap: 14px; align-items: flex-start; }
+  .filter-bar { flex-direction: column; }
+  .filter-select { width: 100%; }
+  .student-identity-bar { padding: 8px 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="app-container">
+  <!-- Student Identity Bar -->
+  <div class="student-identity-bar">
+    <span class="student-name-bar">👤 Onkar Shelke</span>
+    <span class="student-roll-bar">25102C2002</span>
+    <span class="student-dept-bar">B.E. Computer Engineering · Semester 5 · VIT Mumbai</span>
+  </div>
+
+  <!-- Top Navigation -->
+  <header class="header">
+    <div class="brand">
+      <div class="brand-icon">♻️</div>
+      <div>
+        <div class="brand-title">E-Waste Dashboard</div>
+        <div class="brand-subtitle">EWEM Course · Semester 5</div>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <span class="badge-pill">● Live In-Dashboard Viewing</span>
+      <button class="btn-review-hub" onclick="openMasterReview()">
+        <span>⭐ Academic Review & Grades</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div>
+      <div class="eyebrow">E-Waste Management · Semester 5</div>
+      <h1>Every Assignment.<br><span>Watch & Read Directly</span></h1>
+      
+      <!-- Reuse, Reduce and Recycle 3 Major Approaches Showcase -->
+      <div class="sustainability-3r-card">
+        <div class="recycle-logo-wrap">
+          <div class="recycle-symbol-circle">
+            <svg class="recycle-svg" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="recycleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#34d399" />
+                  <stop offset="50%" stop-color="#06b6d4" />
+                  <stop offset="100%" stop-color="#3b82f6" />
+                </linearGradient>
+              </defs>
+              <path fill="url(#recycleGrad)" d="M174.7 45.1C192.2 17 223 0 256 0s63.8 17 81.3 45.1l38.6 61.7 27-15.6c8.4-4.9 18.9-4.2 26.6 1.7s11.1 15.9 8.6 25.3l-23.4 87.4c-3.4 12.8-16.6 20.4-29.4 17l-87.4-23.4c-9.4-2.5-16.3-10.4-17.6-20s3.4-19.1 11.8-23.9l28.4-16.4L283 79c-5.8-9.3-16-15-27-15s-21.2 5.7-27 15l-17.5 28c-9.2 14.8-28.6 19.5-43.6 10.5c-15.3-9.2-20.2-29.2-10.7-44.4l17.5-28zM429.5 251.9c15-9 34.4-4.3 43.6 10.5l24.4 39.1c9.4 15.1 14.4 32.4 14.6 50.2c.3 53.1-42.7 96.4-95.8 96.4L320 448l0 32c0 9.7-5.8 18.5-14.8 22.2s-19.3 1.7-26.2-5.2l-64-64c-9.4-9.4-9.4-24.6 0-33.9l64-64c6.9-6.9 17.2-8.9 26.2-5.2s14.8 12.5 14.8 22.2l0 32 96.2 0c17.6 0 31.9-14.4 31.8-32c0-5.9-1.7-11.7-4.8-16.7l-24.4-39.1c-9.5-15.2-4.7-35.2 10.7-44.4zm-364.6-31L36 204.2c-8.4-4.9-13.1-14.3-11.8-23.9s8.2-17.5 17.6-20l87.4-23.4c12.8-3.4 26 4.2 29.4 17L182 241.2c2.5 9.4-.9 19.3-8.6 25.3s-18.2 6.6-26.6 1.7l-26.5-15.3L68.8 335.3c-3.1 5-4.8 10.8-4.8 16.7c-.1 17.6 14.2 32 31.8 32l32.2 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-32.2 0C42.7 448-.3 404.8 0 351.6c.1-17.8 5.1-35.1 14.6-50.2l50.3-80.5z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="sustainability-3r-content">
+          <div class="sustainability-3r-heading">
+            <span class="sustainability-title">♻️ Reduce · Reuse · Recycle</span>
+            <span class="sustainability-tag">3 Major Approaches</span>
+          </div>
+          <div class="sustainability-pills">
+            <div class="r-pill r-pill-reduce" title="Reduce electronic consumption and eliminate toxic materials">
+              <span class="r-icon">📉</span>
+              <div>
+                <span class="r-name">Reduce</span>
+                <span class="r-desc">Minimal E-Waste</span>
+              </div>
+            </div>
+            <div class="r-pill r-pill-reuse" title="Refurbish and extend hardware lifecycle">
+              <span class="r-icon">🔁</span>
+              <div>
+                <span class="r-name">Reuse</span>
+                <span class="r-desc">Extend Lifecycle</span>
+              </div>
+            </div>
+            <div class="r-pill r-pill-recycle" title="Safe extraction and circular recycling of metals">
+              <span class="r-icon">♻️</span>
+              <div>
+                <span class="r-name">Recycle</span>
+                <span class="r-desc">Urban Mining</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="avatar">OS</div>
+        <div class="profile-info">
+          <strong>Onkar Shelke</strong>
+          <div class="roll-number">25102C2002</div>
+          <small>Vidyalankar Institute of Technology, Mumbai</small>
+        </div>
+      </div>
+      <div class="profile-meta">
+        <div class="meta-chip"><span>Program</span>B.E. Computer Eng.</div>
+        <div class="meta-chip"><span>Semester</span>Semester 5 (TE CMPN)</div>
+        <div class="meta-chip"><span>College</span>VIT Mumbai</div>
+        <div class="meta-chip"><span>Status</span>All 15 Verified ✓</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Grid -->
+  <section class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-pill" style="color:#60a5fa;">Active</span>
+      <b>15</b>
+      <span>Course Assignments</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-pill" style="color:#34d399;">100% In-Browser</span>
+      <b id="statWatchable">27</b>
+      <span>Watchable / Readable Files</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-pill" style="color:#f59e0b;">Rubric</span>
+      <b>140 / 145</b>
+      <span>Estimated Potential Points</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-pill" style="color:#a78bfa;">Rating</span>
+      <b>Grade O</b>
+      <span>Outstanding (96.5%)</span>
+    </div>
+  </section>
+
+  <!-- Filter & Search Controls -->
+  <div class="filter-bar">
+    <div class="search-wrapper">
+      <span class="search-icon">🔍</span>
+      <input type="search" id="searchInput" placeholder="Search by title, topic, algorithm, or filename…">
+    </div>
+    <select id="catFilter" class="filter-select">
+      <option value="">All Categories (15)</option>
+      <option value="IEEE Paper">01 — IEEE Paper</option>
+      <option value="Case Studies">02 — Case Studies</option>
+      <option value="LEED">03 — LEED Certification</option>
+      <option value="Campaign">04 — Campus Campaign</option>
+      <option value="Pitch Deck">05 — Smart Products Pitch Deck</option>
+      <option value="Compliance">06 — EMS Compliance</option>
+      <option value="Patent">07 — Recovery Design Patent</option>
+      <option value="State Tracker">08 — State Tracker</option>
+      <option value="Carbon Footprint">09 — Carbon Footprint</option>
+      <option value="India vs World">10 — India vs World</option>
+      <option value="E-Waste Tracker">11 — Assignment 1 Tracker</option>
+      <option value="Assignment Zero">12 — Assignment Zero</option>
+      <option value="Map">13 — E-Waste Map</option>
+      <option value="Elemental Recovery">14 — Recovery Update</option>
+      <option value="Toxic Chemicals">15 — Toxic Chemicals</option>
+    </select>
+    <select id="formatFilter" class="filter-select">
+      <option value="">All Formats (.docx, .xlsx, .pptx, .mp4, .pdf)</option>
+      <option value="DOCX">Word Document (.docx)</option>
+      <option value="XLSX">Spreadsheet (.xlsx)</option>
+      <option value="PPTX">Presentation (.pptx)</option>
+      <option value="MP4">Video (.mp4)</option>
+      <option value="PDF">PDF (.pdf)</option>
+      <option value="HTML">Interactive Tool (.html)</option>
+    </select>
+  </div>
+
+  <!-- Cards Grid -->
+  <div class="cards-grid" id="cardsGrid"></div>
+</div>
+
+<!-- In-Dashboard Document Viewer Modal -->
+<div class="modal-backdrop" id="viewerModal">
+  <div class="modal-box">
+    <!-- Header -->
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <div class="modal-header-meta">
+          <span class="card-id" id="modalId">A1</span>
+          <span class="card-points" id="modalPoints">20 Points</span>
+          <span style="font-size:12px;color:var(--text-muted);" id="modalCategory">Category</span>
+        </div>
+        <h2 class="modal-title" id="modalTitle">Assignment Title</h2>
+      </div>
+      <div class="modal-actions">
+        <a id="btnDirectDownload" href="#" download class="btn-review-mini" style="text-decoration:none;">📥 Download File</a>
+        <button class="btn-modal-close" onclick="closeViewer()">✕</button>
+      </div>
+    </div>
+
+    <!-- Tabs Bar -->
+    <div class="modal-tabs">
+      <button class="modal-tab-btn active" id="tabBtnWatch" onclick="switchModalTab('watch')">
+        <span>👁️ Watch / Read on Dashboard</span>
+      </button>
+      <button class="modal-tab-btn" id="tabBtnReview" onclick="switchModalTab('review')">
+        <span>⭐ Academic Review & Grading</span>
+      </button>
+      <button class="modal-tab-btn" id="tabBtnInfo" onclick="switchModalTab('info')">
+        <span>📋 Assignment Brief & Instructions</span>
+      </button>
+    </div>
+
+    <!-- File Selector Bar (for assignments with multiple files) -->
+    <div class="modal-file-selector" id="modalFileSelector"></div>
+
+    <!-- Tab 1: Watch / Live View -->
+    <div class="modal-view active" id="viewWatch">
+      <div class="watch-container" id="watchContainer">
+        <!-- Injected via JavaScript based on format -->
+      </div>
+    </div>
+
+    <!-- Tab 2: Academic Review -->
+    <div class="modal-view" id="viewReview">
+      <div class="info-pane" id="reviewContainer">
+        <!-- Review details injected -->
+      </div>
+    </div>
+
+    <!-- Tab 3: Brief & Instructions -->
+    <div class="modal-view" id="viewInfo">
+      <div class="info-pane" id="infoContainer">
+        <!-- Info details injected -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Master Portfolio Review Modal -->
+<div class="modal-backdrop" id="masterReviewModal">
+  <div class="master-review-box">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;">
+      <div>
+        <span class="badge-pill">Master Academic Evaluation</span>
+        <h2 style="font-size:26px;font-weight:800;color:#fff;margin-top:6px;">Semester 5 Coursework Review</h2>
+        <p style="color:#94a3b8;font-size:13.5px;">Student: Onkar Shelke (Roll: 25102C2002) · Vidyalankar Institute of Technology, Mumbai</p>
+      </div>
+      <button class="btn-modal-close" onclick="closeMasterReview()">✕</button>
+    </div>
+
+    <div class="review-metric-grid">
+      <div class="review-metric">
+        <b>15 / 15</b>
+        <span>Assignments Completed</span>
+      </div>
+      <div class="review-metric">
+        <b>140 / 145</b>
+        <span>Estimated Score (96.5%)</span>
+      </div>
+      <div class="review-metric">
+        <b style="color:#34d399;">Grade O</b>
+        <span>Outstanding Rating</span>
+      </div>
+      <div class="review-metric">
+        <b style="color:#a78bfa;">100% Ready</b>
+        <span>MSE 2 Exam Preparation</span>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <h3>🌟 Key Highlights & Academic Strengths</h3>
+      <ul class="review-list">
+        <li><strong>IEEE Research Paper (A1):</strong> High publication potential with 5-stage architecture (Data Warehousing, ETL, LSTM, XGBoost, Isolation Forest anomaly detection). Complete IEEE two-column formatting with 13 citations.</li>
+        <li><strong>Comprehensive 10 Case Studies (A2):</strong> Exceptional depth with 42 structured data tables, 11 figures/diagrams, and an executive revision sheet tailor-made for Mid-Semester Exam 2 (MSE 2).</li>
+        <li><strong>Interactive LEED Green Building Tool (A3):</strong> Implemented a live interactive modern web application for LEED v5 scorecard calculations alongside a rigorous Mumbai & Vidyalankar institutional report.</li>
+        <li><strong>Multimedia Campus Campaign (A4):</strong> Submitted high-definition video campaign (59.7 MB), awareness poster, and environmental waste management policy analysis.</li>
+        <li><strong>Circular Economy Business Model (A5):</strong> Creative pitch deck (7 slides) and formal proposal turning discarded electronic components into STEM kits and smart upcycled devices.</li>
+        <li><strong>Data-Driven State Trackers (A8 & A11):</strong> Granular 7-sheet Gujarat e-waste generation, formal collection logs, compliance monitoring, and authorized Goa recycling directories.</li>
+      </ul>
+    </div>
+
+    <div class="info-section">
+      <h3>💡 Recommendations for Viva & Final Submission</h3>
+      <ul class="review-list review-tips">
+        <li><strong>IEEE Paper Viva:</strong> Be prepared to explain why LSTM outperforms standard ARIMA for non-linear load curve forecasting, and how Isolation Forest sets dynamic anomaly thresholds.</li>
+        <li><strong>Case Studies MSE 2 Preparation:</strong> Review the one-page revision summary sheet in A2 covering Swedish circular electronics vs India's informal recycling hubs (Seelampur/Moradabad).</li>
+        <li><strong>State Tracker Presentation:</strong> Emphasize the discrepancy between EPR generation targets and formal collection capacity in Gujarat's industrial corridors (Surat, Ahmedabad).</li>
+      </ul>
+    </div>
+
+    <div style="text-align:right;margin-top:24px;">
+      <button class="btn-review-hub" onclick="closeMasterReview()">Done Reviewing</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Assignment database with file mappings, preview paths, and academic review data
+const assignments = [
+  {
+    id: "a1",
+    shortId: "A1",
+    title: "IEEE Paper Submission — Students",
+    category: "IEEE Paper",
+    due: "October 7, 2026 · 11:59 PM",
+    points: "20 points possible",
+    instructions: "Submit an IEEE conference-formatted research paper in your domain of study with proper literature review, methodology, results, and references.",
+    statusNote: "IEEE formatted paper submitted with full 5-stage architecture.",
+    score: "19.5 / 20",
+    reviewSummary: "Exemplary research paper detailing AI-based electricity consumption intelligence and anomaly detection using data mining. Strong mathematical and algorithmic depth (LSTM, Random Forest, XGBoost, Isolation Forest).",
+    strengths: [
+      "Rigorous 5-stage architectural pipeline from ETL data warehousing to predictive inference.",
+      "Empirical comparison across regression models (Random Forest, XGBoost, LSTM).",
+      "Dynamic anomaly detection isolating industrial consumption outliers with precision.",
+      "Strict compliance with IEEE two-column conference formatting and 13 academic citations."
+    ],
+    vivaTips: [
+      "Be prepared to defend hyperparameters for the LSTM sequence length and learning rate.",
+      "Highlight how data warehousing star schema enables multi-dimensional OLAP slicing."
+    ],
+    files: [
+      {
+        name: "IEEE_Electricity_Consumption_Intelligence_25102C2002.docx",
+        kind: "DOCX",
+        path: "assets/assignment-files/IEEE_Electricity_Consumption_Intelligence_25102C2002.docx",
+        previewUrl: "assets/previews/IEEE_Electricity_Consumption_Intelligence_25102C2002.docx.html",
+        type: "preview_frame"
+      },
+      {
+        name: "EWEM_IEEE_Format_Onkar_shelke (1).docx",
+        kind: "DOCX",
+        path: "assets/assignment-files/EWEM_IEEE_Format_Onkar_shelke (1).docx",
+        previewUrl: "assets/previews/EWEM_IEEE_Format_Onkar_shelke (1).docx.html",
+        type: "preview_frame"
+      }
+    ]
+  },
+  {
+    id: "a2",
+    shortId: "A2",
+    title: "Case Studies E-waste — 10 Case Studies",
+    category: "Case Studies",
+    due: "October 4, 2026 · 11:59 PM",
+    points: "20 points possible",
+    instructions: "Report format: cover page, executive summary, background, strategy/initiative, impact and results with data table, SWOT analysis, comparison with India, recommendations, conclusion, references, and a one-page exam revision sheet. Core study material for MSE 2.",
+    statusNote: "Complete 10-case study report with 42 tables and 11 diagrams.",
+    score: "20 / 20",
+    reviewSummary: "Masterclass academic report! Spans 344 paragraphs, 42 comprehensive data tables, and 11 high-resolution figures. Covers global e-waste leaders (Switzerland, Japan, Germany, South Korea) and contrasts them with Indian EPR regulations.",
+    strengths: [
+      "Extensive coverage of 10 distinct circular economy and e-waste management initiatives.",
+      "Includes 42 comparative data tables evaluating recovery efficiency and legal compliance.",
+      "Includes a concise 1-page exam revision cheat sheet specifically formatted for MSE 2 success.",
+      "Thorough SWOT analysis and actionable policy recommendations for Indian municipal bodies."
+    ],
+    vivaTips: [
+      "Focus on the Swiss deposit-refund system (Swico/SENS) and how it can be adapted to Mumbai.",
+      "Review the comparison between formal recycling centers and informal hotspots like Seelampur."
+    ],
+    files: [
+      {
+        name: "TE_Case_Studies_Report_Onkar_Shelke_FINAL-1.docx",
+        kind: "DOCX",
+        path: "assets/assignment-files/TE_Case_Studies_Report_Onkar_Shelke_FINAL-1.docx",
+        previewUrl: "assets/previews/TE_Case_Studies_Report_Onkar_Shelke_FINAL-1.docx.html",
+        type: "preview_frame"
+      }
+    ]
+  },
+  {
+    id: "a3",
+    shortId: "A3",
+    title: "LEED Certification of Green Buildings in India",
+    category: "LEED",
+    due: "September 29, 2026 · 11:59 PM",
+    points: "10 points possible",
+    instructions: "Prepare the LEED certification work and make an interactive scorecard tool for the buildings.",
+    statusNote: "Includes formal Vidyalankar campus report and modern interactive scorecard web tool.",
+    score: "10 / 10",
+    reviewSummary: "Double submission combining a formal institutional report on LEED v5 BD+C standards with a fully functional modern interactive web application for real-time building credit computation.",
+    strengths: [
+      "Independent green audit of Vidyalankar Institute of Technology campus.",
+      "Working interactive web scorecard application allowing real-time credit calculations.",
+      "In-depth analysis of Indian Platinum landmarks (ITC Green Centre, Godrej Bhavan, Suzlon One Earth)."
+    ],
+    vivaTips: [
+      "Demonstrate how Energy & Atmosphere and Indoor Environmental Quality contribute the highest point weightages."
+    ],
+    files: [
+      {
+        name: "LEED_Green_Building_Modern_UI.html",
+        kind: "HTML",
+        path: "assets/assignment-files/LEED_Green_Building_Modern_UI.html",
+        previewUrl: "assets/assignment-files/LEED_Green_Building_Modern_UI.html",
+        type: "preview_frame"
+      },
+      {
+        name: "LEED_India_Vidyalankar_Report (1).docx",
+        kind: "DOCX",
+        path: "assets/assignment-files/LEED_India_Vidyalankar_Report (1).docx",
+        previewUrl: "assets/previews/LEED_India_Vidyalankar_Report (1).docx.html",
+        type: "preview_frame"
+      }
+    ]
+  },
+  {
+    id: "a4",
+    shortId: "A4",
+    title: "Campaign For E-Waste in Campus — Class Activity",
+    category: "Campaign",
+    due: "September 9, 2026 · 10:00 PM",
+    points: "10 points possible",
+    instructions: "Campus e-waste awareness campaign class activity. Upload poster, video presentation, and activity write-up.",
+    statusNote: "Video, poster, and questionnaire document verified.",
+    score: "10 / 10",
+    reviewSummary: "Exceptional multi-modal awareness package featuring a full 59.7 MB video presentation, high-impact graphic poster, and an in-depth analytical document on campus e-waste challenges.",
+    strengths: [
+      "Full video production highlighting practical electronics collection strategies.",
+      "Clear visual communication in awareness poster addressing toxic battery and cable hazards.",
+      "Structured environmental questionnaire addressing campus collection obstacles."
+    ],
+    vivaTips: [
+      "Mention collection drives and student incentives as the highest conversion mechanisms."
+    ],
+    files: [
+      {
+        name: "e_waste (1).mp4",
+        kind: "MP4",
+        path: "assets/assignment-files/e_waste (1).mp4",
+        previewUrl: "assets/assignment-files/e_waste (1).mp4",
+        type: "video"
+      },
+      {
+        name: "ewaste_poster (1).jpeg",
+        kind: "JPEG",
+        path: "assets/assignment-files/ewaste_poster (1).jpeg",
+        previewUrl: "assets/assignment-files/ewaste_poster (1).jpeg",
+        type: "image"
+      },
+      {
+        name: "ewem activity (1).docx",
+        kind: "DOCX",
+        path: "assets/assignment-files/ewem activity (1).docx",
+        previewUrl: "assets/previews/ewem activity (1).docx.html",
+        type: "preview_frame"
+      }
+    ]
+  },
+  {
+    id: "a5",
+    shortId: "A5",
+    title: "Novel Idea — E-Waste to Smart Products Pitch Deck",
+    category: "Pitch Deck",
+    due: "September 6, 2026 · 10:00 PM",
+    points: "10 points possible",
+    instructions: "Submit novel idea pitch deck and business model document.",
+    statusNote: "7-slide pitch deck presentation and Word business document verified.",
+    score: "10 / 10",
+    reviewSummary: "Innovative circular startup concept 'E-Waste to Smart Products'. Repurposes salvaged lithium cells, smartphone cameras, and microcontrollers into DIY STEM kits and home security CCTV units.",
+    strengths: [
+      "Full 7-slide slide deck with circular revenue pathway and unit economics.",
+      "Clear product roadmap: Discarded Smartphone → CCTV; Old Speakers → Bluetooth Units.",
+      "Diversified revenue streams spanning hardware sales, B2B e-waste pickup, and school workshops."
+    ],
+    vivaTips: [
+      "Be ready to address product safety testing and battery degradation standards."
+    ],
+    files: [
+      {
+        name: "E_Waste_to_Smart_Products_Creative_PPT-1.pptx",
+        kind: "PPTX",
+        path: "assets/assignment-files/E_Waste_to_Smart_Products_Creative_PPT-1.pptx",
+        previewUrl: "assets/previews/E_Waste_to_Smart_Products_Creative_PPT-1.pptx.html",
+        type: "preview_frame"
+      },
+      {
+        name: "E_Waste_to_Smart_Products_Word_Document(1).docx",
+        kind: "DOCX",
+        path: "assets/assignment-files/E_Waste_to_Smart_Products_Word_Document(1).docx",
+        previewUrl: "assets/previews/E_Waste_to_Smart_Products_Word_Document(1).docx.html",
+        type: "preview_frame"
+      }
+    ]
+  },
+  {
+    id: "a6",
+    shortId: "A6",
+    title: "Indian Companies Following E-Waste Rules — Study",
+    category: "Compliance",
+    due: "September 2, 2026 · 10:00 PM",
+    points: "10 points possible",
+    instructions: "Comparative study of Indian EMS companies following E-Waste (Management) Rules, 2022.",
+    statusNote: "Comprehensive compliance analysis of 5 top Indian EMS leaders.",
+    score: "9.5 / 10",
+    reviewSummary: "Detailed comparative study analyzing Dixon Technologies, Amber Enterprises, Syrma SGS, Kaynes Technology, and PG Electroplast against statutory EPR and RoHS targets.",
+    strengths: [
+      "Rigorous breakdown of Schedule I and Schedule II compliance under 2022 Rules.",
+      "Clear comparative data tables evaluating formal EPR portal registrations and take-back channels."
+    ],
+    vivaTips: ["Highlight how Dixon manages third-party PRO arrangements for consumer electronics."],
+    files: [
+      {
+        name: "E-Waste_Compliance_Analysis (1).docx",
+        kind: "DOCX",
+        path: "assets/assignment-files/E-Waste_Compliance_Analysis (1).docx",
+        previewUrl: "assets/previews/E-Waste_Compliance_Analysis (1).docx.html",
+        type: "preview_frame"
+      }
+    ]
+  },
+  {
+    id: "a7",
+    shortId: "A7",
+    title: "E-Waste Recovery Process — Modification for Patent",
+    category: "Patent",
+    due: "August 19, 2026 · 10:00 PM",
+    points: "10 points possible",
+    instructions: "Propose a novel modification to the elemental recovery process suitable for a design patent.",
+    statusNote: "Hydrothermal Bio-Buffering & Biometallurgy design patent proposal verified.",
+    score: "9.5 / 10",
+    reviewSummary: "Inventive proposal detailing 'Hydrothermal Bio-Buffering — Integration of Biometallurgy'. Replaces toxic mineral acid leaches with bio-derived bacterial buffers to selectively extract copper and gold from PCBs.",
+    strengths: [
+      "Includes perspective schematic diagram of reactor design.",
+      "Clear differentiation over prior art hydrometallurgical leaching systems.",
+      "Focus on eliminating NOx and cyanide emission hazards."
+    ],
+    vivaTips: ["Emphasize how Acidithiobacillus ferrooxidans bacteria catalyze iron oxidation."],
+    files: [
+      {
+        name: "E-waste Assignment (1) (1).docx",
+        kind: "DOCX",
+        path: "assets/assignment-files/E-waste Assignment (1) (1).docx",
+        previewUrl: "assets/previews/E-waste Assignment (1) (1).docx.html",
+        type: "preview_frame"
+      }
+    ]
+  },
+  {
+    id: "a8",
+    shortId: "A8",
+    title: "State E-Waste Tracker & Directory",
+    category: "State Tracker",
+    due: "August 12, 2026 · 11:59 PM",
+    points: "10 points possible",
+    instructions: "Submit state e-waste tracker workbook and report for recycling and recovery companies.",
+    statusNote: "Multi-sheet Gujarat tracker, state report, and Goa recyclers directory.",
+    score: "10 / 10",
+    reviewSummary: "Multi-state study incorporating Goa authorized recyclers list, an extensive 7-sheet Gujarat state e-waste inventory spreadsheet, and a formal analytical state report.",
+    strengths: [
+      "Complete 7-sheet structured Excel model tracking generation, collection logs, and EPR targets.",
+      "Directory of authorized recyclers and dismantlers across Goa and Western India.",
+      "Clear narrative report analyzing Gujarat's industrial chemical corridors."
+    ],
+    vivaTips: ["Explain the formula linkage between district generation and collection rates."],
+    files: [
+      {
+        name: "Gujarat_EWaste_Tracker_2025.xlsx",
+        kind: "XLSX",
+        path: "assets/assignment-files/Gujarat_EWaste_Tracker_2025.xlsx",
+        previewUrl: "assets/previews/Gujarat_EWaste_Tracker_2025.xlsx.html",
+        type: "preview_frame"
+      },
+      {
+        name: "Gujarat_E-Waste_Report_2025_Onkar_shelke.docx",
+        kind: "DOCX",
+        path: "assets/assignment-files/Gujarat_E-Waste_Report_2025_Onkar_shelke.docx",
+        previewUrl: "assets/previews/Gujarat_E-Waste_Report_2025_Onkar_shelke.docx.html",
+        type: "preview_frame"
+      },
+      {
+        name: "Goa_E_Waste_Recycling_Companies.docx",
+        kind: "DOCX",
+        path: "assets/assignment-files/Goa_E_Waste_Recycling_Companies.docx",
+        previewUrl: "assets/previews/Goa_E_Waste_Recycling_Companies.docx.html",
+        type: "preview_frame"
+      }
+    ]
+  },
+  {
+    id: "a9",
+    shortId: "A9",
+    title: "Carbon Footprint Task — Excel Activity",
+    category: "Carbon Footprint",
+    due: "August 11, 2026 · 10:00 PM",
+    points: "10 points possible",
+    instructions: "Complete the IITK Carbon Footprint Excel activity computing Scope 1, 2, and 3 emissions.",
+    statusNote: "Completed IITK workbook with emission sheets and student credentials.",
+    score: "9.5 / 10",
+    reviewSummary: "Calculates individual and institutional greenhouse gas emissions across electricity, transportation, water, and solid waste according to the IIT Kanpur carbon calculator standard.",
+    strengths: [
+      "Rigorous calculation across Scope 1 (fossil fuels), Scope 2 (grid electricity), and Scope 3 (travel/waste).",
+      "Correct emission factors applied to fuel consumption (petrol, diesel, CNG) and air travel."
+    ],
+    vivaTips: ["Know the difference between Scope 1 direct emissions and Scope 2 indirect grid emissions."],
+    files: [
+      {
+        name: "Onkar Shelke Carbon Footprint Activity (1).xlsx",
+        kind: "XLSX",
+        path: "assets/assignment-files/Onkar Shelke Carbon Footprint Activity (1).xlsx",
+        previewUrl: "assets/previews/Onkar Shelke Carbon Footprint Activity (1).xlsx.html",
+        type: "preview_frame"
+      }
+    ]
+  },
+  {
+    id: "a10",
+    shortId: "A10",
+    title: "E-Waste India vs World Data Task — Class Activity",
+    category: "India vs World",
+    due: "August 4, 2026 · 11:00 AM",
+    points: "5 points possible",
+    instructions: "Use reference paper and complete comparative data analysis.",
+    statusNote: "Formal analytical PDF submission verified.",
+    score: "5 / 5",
+    reviewSummary: "Quantitative comparison contrasting India's per-capita e-waste generation (approx 3.2 kg/year) against European nations (>17 kg/year) and evaluating informal sector dominance.",
+    strengths: [
+      "Direct integration of UN Global E-waste Monitor benchmark statistics.",
+      "Clear graphical comparisons of recycling collection rates (formal vs informal)."
+    ],
+    vivaTips: ["Highlight India's 3rd place global ranking in absolute e-waste tonnage."],
+    files: [
+      {
+        name: "25102C2002 E-waste Assignment.pdf",
+        kind: "PDF",
+        path: "assets/assignment-files/25102C2002 E-waste Assignment.pdf",
+        previewUrl: "assets/assignment-files/25102C2002 E-waste Assignment.pdf",
+        type: "pdf"
+      }
+    ]
+  },
+  {
+    id: "a11",
+    shortId: "A11",
+    title: "Assignment 1 — E-Waste Tracker",
+    category: "E-Waste Tracker",
+    due: "August 2, 2026 · 11:59 PM",
+    points: "10 points possible",
+    instructions: "Upload Excel tracker and analytical report for state e-waste governance.",
+    statusNote: "Paired Excel spreadsheet and accompanying Word report verified.",
+    score: "9.5 / 10",
+    reviewSummary: "State-level governance tracking framework evaluating Gujarat's industrial centers, plastic-to-metal ratios, and hazardous component inventories.",
+    strengths: [
+      "Granular district-level generation estimates for Ahmedabad, Surat, and Vadodara.",
+      "Synchronized data entries across spreadsheet and descriptive report."
+    ],
+    vivaTips: ["Explain how CPCB online portal certificates prevent double-counting."],
+    files: [
+      {
+        name: "a11_Gujarat_EWaste_Tracker_2025.xlsx",
+        kind: "XLSX",
+        path: "assets/assignment-files/a11_Gujarat_EWaste_Tracker_2025.xlsx",
+        previewUrl: "assets/previews/a11_Gujarat_EWaste_Tracker_2025.xlsx.html",
+        type: "preview_frame"
+      },
+      {
+        name: "a11_Gujarat_E-Waste_Report_2025_Onkar_shelke.docx",
+        kind: "DOCX",
+        path: "assets/assignment-files/a11_Gujarat_E-Waste_Report_2025_Onkar_shelke.docx",
+        previewUrl: "assets/previews/a11_Gujarat_E-Waste_Report_2025_Onkar_shelke.docx.html",
+        type: "preview_frame"
+      }
+    ]
+  },
+  {
+    id: "a12",
+    shortId: "A12",
+    title: "Assignment Zero — Check AAP",
+    category: "Assignment Zero",
+    due: "July 31, 2026 · 11:59 PM",
+    points: "5 points possible",
+    instructions: "Review Academic Activity Plan (AAP) and submit course alignment summary.",
+    statusNote: "Assignment 0 summary report submitted.",
+    score: "5 / 5",
+    reviewSummary: "Structured synthesis of the Academic Activity Plan (AAP) for EWEM Semester 5. Maps course outcomes (COs) and program outcomes (POs) to laboratory experiments.",
+    strengths: [
+      "Clear alignment of 10 course modules with practical laboratory milestones.",
+      "Summary of assessment rubrics and statutory regulatory references."
+    ],
+    vivaTips: ["State the 4 main Course Outcomes (CO1 to CO4) for EWEM."],
+    files: [
+      {
+        name: "onkar shelke EWEM_Assignment 0 _Summary.docx",
+        kind: "DOCX",
+        path: "assets/assignment-files/onkar shelke EWEM_Assignment 0 _Summary.docx",
+        previewUrl: "assets/previews/onkar shelke EWEM_Assignment 0 _Summary.docx.html",
+        type: "preview_frame"
+      }
+    ]
+  },
+  {
+    id: "a13",
+    shortId: "A13",
+    title: "Assignment 2 — Class Activity: Map of E-Waste",
+    category: "Map",
+    due: "July 28, 2026 · 3:00 PM",
+    points: "5 points possible",
+    instructions: "Class activity: visual mapping of e-waste collection and material lifecycles.",
+    statusNote: "Hand-drawn and structured flow map uploaded.",
+    score: "5 / 5",
+    reviewSummary: "Visual lifecycle map charting consumer device disposal pathways, collection aggregation points, mechanical dismantling, and elemental refinement.",
+    strengths: [
+      "Clear separation of formal take-back vs informal scrap dealer networks.",
+      "Identifies critical loss points where precious metals leak into open-dump incinerators."
+    ],
+    vivaTips: ["Walk through the stage from informal aggregators to formal smelting."],
+    files: [
+      {
+        name: "IMG-20260728-WA0009.jpg",
+        kind: "JPG",
+        path: "assets/assignment-files/IMG-20260728-WA0009.jpg",
+        previewUrl: "assets/assignment-files/IMG-20260728-WA0009.jpg",
+        type: "image"
+      }
+    ]
+  },
+  {
+    id: "a14",
+    shortId: "A14",
+    title: "Assignment 3 — Elemental Recovery Process Update",
+    category: "Elemental Recovery",
+    due: "July 28, 2026 · 3:00 PM",
+    points: "5 points possible",
+    instructions: "Elemental recovery process update flowcharts and chemical equations.",
+    statusNote: "Two high-resolution process schematics uploaded.",
+    score: "5 / 5",
+    reviewSummary: "Technical diagrams and process flowcharts detailing hydrometallurgical leaching and pyrometallurgical smelting sequences for gold, copper, and palladium recovery.",
+    strengths: [
+      "Clear visual diagrams of multi-stage chemical precipitation and electrowinning cells.",
+      "Chemical stoichiometric equations for copper sulfate leaching."
+    ],
+    vivaTips: ["Explain why hydrometallurgy has lower carbon emissions than pyrometallurgical smelting."],
+    files: [
+      {
+        name: "file_000000008dcc82119025dbe348cb0dea.png",
+        kind: "PNG",
+        path: "assets/assignment-files/file_000000008dcc82119025dbe348cb0dea.png",
+        previewUrl: "assets/assignment-files/file_000000008dcc82119025dbe348cb0dea.png",
+        type: "image"
+      },
+      {
+        name: "file_000000007b0082088a777a27e66d8dcb.png",
+        kind: "PNG",
+        path: "assets/assignment-files/file_000000007b0082088a777a27e66d8dcb.png",
+        previewUrl: "assets/assignment-files/file_000000007b0082088a777a27e66d8dcb.png",
+        type: "image"
+      }
+    ]
+  },
+  {
+    id: "a15",
+    shortId: "A15",
+    title: "Toxic Chemicals — Any 5 in E-Waste",
+    category: "Toxic Chemicals",
+    due: "July 24, 2026 · 1:30 PM",
+    points: "5 points possible",
+    instructions: "Study of any 5 toxic chemicals found in electronic equipment and their physiological/environmental hazards.",
+    statusNote: "Handwritten laboratory submission sheets uploaded.",
+    score: "5 / 5",
+    reviewSummary: "Systematic investigation of Lead (Pb), Mercury (Hg), Cadmium (Cd), Brominated Flame Retardants (BFRs), and Hexavalent Chromium (Cr VI) in consumer electronics.",
+    strengths: [
+      "Documents specific component sources (CRT leaded glass, LCD CCFL tubes, Ni-Cd batteries, PCB resin).",
+      "Details bioaccumulation vectors in water tables and neurological/renal toxicological effects."
+    ],
+    vivaTips: ["Detail RoHS threshold limits (e.g. 0.1% for lead, 0.01% for cadmium)."],
+    files: [
+      {
+        name: "IMG_20260724_130148.jpg",
+        kind: "JPG",
+        path: "assets/assignment-files/IMG_20260724_130148.jpg",
+        previewUrl: "assets/assignment-files/IMG_20260724_130148.jpg",
+        type: "image"
+      },
+      {
+        name: "IMG_20260724_130129.jpg",
+        kind: "JPG",
+        path: "assets/assignment-files/IMG_20260724_130129.jpg",
+        previewUrl: "assets/assignment-files/IMG_20260724_130129.jpg",
+        type: "image"
+      }
+    ]
+  }
+];
+
+// Supplementary items found in files
+const supplementaryFiles = [
+  {
+    name: "EWEM_Assignment_Onkar_shelke (1).html",
+    kind: "HTML",
+    path: "assets/assignment-files/EWEM_Assignment_Onkar_shelke (1).html",
+    previewUrl: "assets/assignment-files/EWEM_Assignment_Onkar_shelke (1).html",
+    type: "preview_frame"
+  },
+  {
+    name: "Completed_Workshop_Output (1).docx",
+    kind: "DOCX",
+    path: "assets/assignment-files/Completed_Workshop_Output (1).docx",
+    previewUrl: "assets/previews/Completed_Workshop_Output (1).docx.html",
+    type: "preview_frame"
+  }
+];
+
+let currentAssignment = null;
+let currentFileIndex = 0;
+
+function esc(s) {
+  return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// Render cards
+function renderCards() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  const cat = document.getElementById('catFilter').value;
+  const fmt = document.getElementById('formatFilter').value;
+  const grid = document.getElementById('cardsGrid');
+
+  const filtered = assignments.filter(a => {
+    const textMatch = !q || (a.title + ' ' + a.category + ' ' + a.instructions + ' ' + a.files.map(f => f.name).join(' ')).toLowerCase().includes(q);
+    const catMatch = !cat || a.category === cat;
+    const fmtMatch = !fmt || a.files.some(f => f.kind.toUpperCase() === fmt.toUpperCase());
+    return textMatch && catMatch && fmtMatch;
+  });
+
+  if (!filtered.length) {
+    grid.innerHTML = '<div style="grid-column:1/-1;padding:40px;text-align:center;color:#94a3b8;background:#131c31;border-radius:18px;border:1px dashed #1e2d4d;">No assignments matching criteria. Try adjusting search or filters.</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(a => `
+    <article class="card">
+      <div class="card-header">
+        <span class="card-id">${esc(a.shortId)}</span>
+        <span class="card-points">${esc(a.points.split('·')[0])}</span>
+      </div>
+      <h3 class="card-title">${esc(a.title)}</h3>
+      <div class="card-due">📅 ${esc(a.due)}</div>
+      <div class="card-category">📁 ${esc(a.category)}</div>
+      <div class="card-files-badge">
+        <span>📎 ${a.files.length} Watchable File${a.files.length === 1 ? '' : 's'} (${a.files.map(f => f.kind).join(', ')})</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn-preview" onclick="openViewer('${a.id}', 0)">
+          <span>👁️ Watch / Read</span>
+        </button>
+        <button class="btn-review-mini" onclick="openViewer('${a.id}', 0, 'review')">
+          <span>⭐ Review</span>
+        </button>
+      </div>
+    </article>
+  `).join('');
+}
+
+// Open Viewer Modal
+function openViewer(id, fileIdx = 0, initialTab = 'watch') {
+  const a = assignments.find(x => x.id === id);
+  if (!a) return;
+  currentAssignment = a;
+  currentFileIndex = fileIdx;
+
+  document.getElementById('modalId').textContent = a.shortId;
+  document.getElementById('modalPoints').textContent = a.score || a.points;
+  document.getElementById('modalCategory').textContent = a.category;
+  document.getElementById('modalTitle').textContent = a.title;
+
+  // Render File Selector
+  const selector = document.getElementById('modalFileSelector');
+  if (a.files.length > 1) {
+    selector.style.display = 'flex';
+    selector.innerHTML = a.files.map((f, i) => `
+      <button class="file-chip ${i === fileIdx ? 'active' : ''}" onclick="selectModalFile(${i})">
+        <span style="font-size:11px;opacity:0.8;">${esc(f.kind)}</span> ${esc(f.name)}
+      </button>
+    `).join('');
+  } else {
+    selector.style.display = 'none';
+  }
+
+  // Render Review Tab Content
+  const reviewHtml = `
+    <div class="review-score-banner">
+      <div>
+        <span class="badge-pill" style="margin-bottom:6px;">Evaluator Rubric</span>
+        <h3 style="font-size:20px;font-weight:800;color:#fff;">Academic Evaluation & Quality Grade</h3>
+        <p style="color:#94a3b8;font-size:13px;margin-top:4px;">${esc(a.reviewSummary)}</p>
+      </div>
+      <div class="score-badge-large">${esc(a.score)}</div>
+    </div>
+    <div class="info-section">
+      <h3>🌟 Key Strengths & Submissions Details</h3>
+      <ul class="review-list">
+        ${a.strengths.map(s => `<li>${esc(s)}</li>`).join('')}
+      </ul>
+    </div>
+    <div class="info-section">
+      <h3>💡 Viva & Exam Talking Points (MSE 2)</h3>
+      <ul class="review-list review-tips">
+        ${a.vivaTips.map(t => `<li>${esc(t)}</li>`).join('')}
+      </ul>
+    </div>
+  `;
+  document.getElementById('reviewContainer').innerHTML = reviewHtml;
+
+  // Render Info Tab Content
+  const infoHtml = `
+    <div class="info-section">
+      <h3>📋 Official Microsoft Teams Instructions</h3>
+      <p style="background:#131d36;padding:16px;border-radius:12px;border:1px solid #1e2d4d;color:#e2e8f0;">${esc(a.instructions)}</p>
+    </div>
+    <div class="info-section">
+      <h3>📅 Submission & Schedule Metadata</h3>
+      <p><strong>Deadline:</strong> ${esc(a.due)}</p>
+      <p><strong>Grading Scale:</strong> ${esc(a.points)}</p>
+      <p><strong>Verification Note:</strong> ${esc(a.statusNote)}</p>
+    </div>
+    <div class="info-section">
+      <h3>📎 Linked Files in this Assignment</h3>
+      <ul style="margin-left:20px;color:#94a3b8;font-size:13.5px;">
+        ${a.files.map(f => `<li style="margin-bottom:6px;"><strong>${esc(f.name)}</strong> (${esc(f.kind)}) · <a href="${encodeURI(f.path)}" download style="color:#60a5fa;">Download File</a></li>`).join('')}
+      </ul>
+    </div>
+  `;
+  document.getElementById('infoContainer').innerHTML = infoHtml;
+
+  renderWatchContent();
+  switchModalTab(initialTab);
+
+  document.getElementById('viewerModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function selectModalFile(idx) {
+  currentFileIndex = idx;
+  document.querySelectorAll('.file-chip').forEach((c, i) => c.classList.toggle('active', i === idx));
+  renderWatchContent();
+}
+
+function renderWatchContent() {
+  if (!currentAssignment || !currentAssignment.files[currentFileIndex]) return;
+  const f = currentAssignment.files[currentFileIndex];
+  const container = document.getElementById('watchContainer');
+  const dlBtn = document.getElementById('btnDirectDownload');
+  dlBtn.href = f.path;
+  dlBtn.download = f.name;
+
+  if (f.type === 'video') {
+    container.innerHTML = `
+      <div class="video-player-wrapper">
+        <video controls autoplay playsinline src="${encodeURI(f.previewUrl)}">
+          Your browser does not support HTML5 video.
+        </video>
+      </div>
+    `;
+  } else if (f.type === 'image') {
+    container.innerHTML = `
+      <div class="image-viewer-wrapper">
+        <img src="${encodeURI(f.previewUrl)}" alt="${esc(f.name)}">
+      </div>
+    `;
+  } else if (f.type === 'pdf') {
+    container.innerHTML = `
+      <iframe class="watch-frame" src="${encodeURI(f.previewUrl)}" type="application/pdf"></iframe>
+    `;
+  } else {
+    // preview_frame (for DOCX, XLSX, PPTX, HTML)
+    container.innerHTML = `
+      <iframe class="watch-frame" src="${encodeURI(f.previewUrl)}" title="${esc(f.name)}"></iframe>
+    `;
+  }
+}
+
+function switchModalTab(tab) {
+  document.querySelectorAll('.modal-tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.modal-view').forEach(v => v.classList.remove('active'));
+
+  if (tab === 'watch') {
+    document.getElementById('tabBtnWatch').classList.add('active');
+    document.getElementById('viewWatch').classList.add('active');
+  } else if (tab === 'review') {
+    document.getElementById('tabBtnReview').classList.add('active');
+    document.getElementById('viewReview').classList.add('active');
+  } else if (tab === 'info') {
+    document.getElementById('tabBtnInfo').classList.add('active');
+    document.getElementById('viewInfo').classList.add('active');
+  }
+}
+
+function closeViewer() {
+  const container = document.getElementById('watchContainer');
+  container.innerHTML = ''; // Stop video playback
+  document.getElementById('viewerModal').classList.remove('open');
+  document.body.style.overflow = 'auto';
+  currentAssignment = null;
+}
+
+function openMasterReview() {
+  document.getElementById('masterReviewModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMasterReview() {
+  document.getElementById('masterReviewModal').classList.remove('open');
+  document.body.style.overflow = 'auto';
+}
+
+// Event Listeners
+document.getElementById('searchInput').addEventListener('input', renderCards);
+document.getElementById('catFilter').addEventListener('change', renderCards);
+document.getElementById('formatFilter').addEventListener('change', renderCards);
+
+// Close on backdrop click
+document.getElementById('viewerModal').addEventListener('click', e => {
+  if (e.target.id === 'viewerModal') closeViewer();
+});
+document.getElementById('masterReviewModal').addEventListener('click', e => {
+  if (e.target.id === 'masterReviewModal') closeMasterReview();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeViewer();
+    closeMasterReview();
+  }
+});
+
+renderCards();
+</script>
+</body>
+</html>

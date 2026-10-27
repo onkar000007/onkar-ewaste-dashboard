@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LEED v5 Building Score Calculator</title>
+<style>
+:root{
+  --bg:#07111f;--panel:#0d1b2a;--panel2:#102338;--line:#21384f;
+  --text:#edf6ff;--muted:#91a7bb;--cyan:#38d9c5;--blue:#4aa8ff;
+  --green:#55d98b;--amber:#ffc857;--red:#ff6b7a;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:
+radial-gradient(circle at 85% 5%,rgba(56,217,197,.14),transparent 28%),
+radial-gradient(circle at 10% 30%,rgba(74,168,255,.10),transparent 26%),var(--bg);color:var(--text)}
+header{padding:34px 5vw 28px;border-bottom:1px solid var(--line);background:rgba(7,17,31,.78);backdrop-filter:blur(16px);position:sticky;top:0;z-index:5}
+header h1{margin:0;font-size:30px;letter-spacing:-.7px} header p{margin:7px 0 0;color:var(--muted)}
+main{max-width:1280px;margin:30px auto;padding:0 20px}
+.card{background:linear-gradient(145deg,rgba(16,35,56,.96),rgba(10,25,41,.96));border:1px solid var(--line);border-radius:22px;padding:24px;margin-bottom:20px;box-shadow:0 16px 45px rgba(0,0,0,.20)}
+h2{margin:0 0 18px;font-size:18px;letter-spacing:.1px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+label{font-weight:650;font-size:13px;display:block;margin-bottom:7px;color:#cfe0ef}
+input[type=text],input[type=number]{width:100%;padding:13px 14px;border:1px solid #2a465e;background:#081727;color:var(--text);border-radius:12px;font-size:15px;outline:none}
+input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(56,217,197,.10)}
+table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border:1px solid var(--line);border-radius:16px}
+th,td{padding:13px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle} th{background:#132a40;color:#a9c1d6;font-size:12px;text-transform:uppercase;letter-spacing:.7px}
+tr:last-child td{border-bottom:0}.score-input{max-width:115px}.max,.small{color:var(--muted);font-size:12px}
+.badge{display:inline-flex;padding:8px 13px;border-radius:999px;font-weight:800;border:1px solid transparent}
+.certified{background:rgba(85,217,139,.12);color:var(--green);border-color:rgba(85,217,139,.3)}
+.silver{background:rgba(190,205,220,.12);color:#d8e2eb;border-color:#5c6f80}
+.gold{background:rgba(255,200,87,.12);color:var(--amber);border-color:rgba(255,200,87,.35)}
+.platinum{background:rgba(205,225,255,.13);color:#cfe3ff;border-color:#7899bd}
+.none{background:rgba(255,107,122,.10);color:#ff9aa5;border-color:rgba(255,107,122,.25)}
+.bigscore{font-size:52px;font-weight:850;color:var(--cyan);letter-spacing:-2px}
+.progress{height:10px;background:#071522;border-radius:99px;overflow:hidden;margin:9px 0;border:1px solid #1d3449}
+.progress>div{height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));border-radius:99px;transition:width .3s}
+.actions{display:flex;gap:10px;flex-wrap:wrap}.btn{border:0;border-radius:12px;padding:12px 17px;font-weight:800;cursor:pointer;transition:.2s}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.08)}.primary{background:linear-gradient(135deg,var(--cyan),var(--blue));color:#04101b}.secondary{background:#183047;color:#d9e8f4;border:1px solid #2b4860}
+.warning{background:rgba(255,200,87,.08);border:1px solid rgba(255,200,87,.28);padding:14px;border-radius:14px;font-size:13px;color:#e5d8b6;margin-bottom:15px}
+.status{padding:17px;border-radius:15px}.status.green{background:rgba(85,217,139,.08);border:1px solid rgba(85,217,139,.3)}.status.red{background:rgba(255,107,122,.07);border:1px solid rgba(255,107,122,.25)}
+.footer{font-size:12px;color:var(--muted);line-height:1.6}
+#checks>div{padding:11px 14px;border:1px solid var(--line);border-radius:12px;background:#0a1928;margin:9px 0!important}
+@media(max-width:700px){header h1{font-size:23px}.bigscore{font-size:40px}table{font-size:13px}th,td{padding:9px}}
+</style>
+</head>
+
+<body>
+<header>
+  <h1>🌿 LEED v5 • Green Building Score Studio</h1>
+  <p>BD+C — New Construction / Major Renovations · 110-point educational scoring framework</p>
+</header>
+
+<main>
+  <section class="card">
+    <h2>01 · Project Identity</h2>
+    <div class="grid">
+      <div><label>Building name</label><input id="building" type="text" placeholder="e.g. Vidyalankar Institute of Technology"></div>
+      <div><label>Location</label><input id="location" type="text" placeholder="e.g. Mumbai, India"></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>02 · LEED Credit Dashboard</h2>
+    <div class="warning">
+      <b>Scoring input:</b> enter the actual points earned for each category. Do not enter an evidence-strength rating such as 4/5.
+    </div>
+    <table>
+      <thead><tr><th>Code</th><th>Category</th><th>Max</th><th>Earned</th><th>Remaining</th></tr></thead>
+      <tbody id="categories"></tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>03 · Compliance Gate</h2>
+    <p class="small">Prerequisites do not add points. They determine whether the score can be treated as meeting the certification conditions represented by this educational calculator.</p>
+    <div id="checks"></div>
+  </section>
+
+  <section class="card">
+    <h2>04 · Live Project Result</h2>
+    <div class="grid">
+      <div>
+        <div class="small">Total LEED points</div>
+        <div class="bigscore" id="score">0 / 110</div>
+        <div class="progress"><div id="bar" style="width:0%"></div></div>
+      </div>
+      <div>
+        <div class="small">Certification level</div>
+        <div id="level" class="badge none">Not Certified</div>
+        <p class="small" id="levelText"></p>
+      </div>
+      <div>
+        <div class="small">Green-building assessment</div>
+        <div id="green" class="badge none">Not LEED-qualified</div>
+        <p class="small" id="greenText"></p>
+      </div>
+    </div>
+    <div id="resultStatus" class="status red" style="margin-top:16px"></div>
+  </section>
+
+  <section class="card">
+    <h2>05 · Category Performance</h2>
+    <div id="breakdown"></div>
+  </section>
+
+  <section class="card">
+    <h2>06 · Project Actions</h2>
+    <div class="actions">
+      <button class="btn primary" onclick="calculate()">⚡ Calculate Score</button>
+      <button class="btn secondary" onclick="resetApp()">↺ Reset Project</button>
+      <button class="btn secondary" onclick="downloadReport()">↓ Download Report</button>
+    </div>
+  </section>
+
+  <section class="card footer">
+    <b>Educational-use notice:</b> This calculator applies the LEED v5 scoring framework represented in the uploaded tool. LEED certification requires applicable prerequisites and third-party verification/review; a calculated score is not an official certification decision.
+  </section>
+</main>
+<script>
+const categories=[
+ {code:"IP",name:"Integrative Process, Planning & Assessments",max:1},
+ {code:"LT",name:"Location & Transportation",max:15},
+ {code:"SS",name:"Sustainable Sites",max:11},
+ {code:"WE",name:"Water Efficiency",max:9},
+ {code:"EA",name:"Energy & Atmosphere",max:33},
+ {code:"MR",name:"Materials & Resources",max:18},
+ {code:"EQ",name:"Indoor Environmental Quality",max:13},
+ {code:"PR",name:"Project Priorities",max:10}
+];
+const checks=[
+ ["Prerequisites","All applicable LEED prerequisites satisfied"],
+ ["MPR","Minimum program requirements satisfied"],
+ ["platinumCarbon","Platinum: required carbon assessment/reduction requirement satisfied"],
+ ["platinumEnergy","Platinum: required energy-performance requirement satisfied"],
+ ["platinumWater","Platinum: required water-performance requirement satisfied"],
+ ["platinumRenewable","Platinum: required renewable-energy requirement satisfied"],
+ ["platinumCommissioning","Platinum: required commissioning requirement satisfied"]
+];
+
+const catBox=document.getElementById("categories");
+categories.forEach(c=>{
+ const tr=document.createElement("tr");
+ tr.innerHTML=`<td><b>${c.code}</b></td><td>${c.name}</td><td>${c.max}</td>
+ <td><input class="score-input" type="number" min="0" max="${c.max}" step="0.1" value="0" id="p_${c.code}" oninput="calculate()"></td>
+ <td id="r_${c.code}">${c.max}</td>`;
+ catBox.appendChild(tr);
+});
+const checksBox=document.getElementById("checks");
+checks.forEach(([id,label])=>{
+ const div=document.createElement("div");
+ div.style.margin="10px 0";
+ div.innerHTML=`<label><input type="checkbox" id="${id}" onchange="calculate()"> ${label}</label>`;
+ checksBox.appendChild(div);
+});
+
+function getScore(){
+ let total=0;
+ const values={};
+ categories.forEach(c=>{
+   let v=parseFloat(document.getElementById("p_"+c.code).value)||0;
+   if(v<0)v=0;if(v>c.max)v=c.max;
+   document.getElementById("p_"+c.code).value=v;
+   values[c.code]=v; total+=v;
+   document.getElementById("r_"+c.code).textContent=(c.max-v).toFixed(1).replace(".0","");
+ });
+ return {total,values};
+}
+function prerequisitesOK(){return document.getElementById("Prerequisites").checked && document.getElementById("MPR").checked;}
+function platinumOK(){
+ return ["platinumCarbon","platinumEnergy","platinumWater","platinumRenewable","platinumCommissioning"].every(id=>document.getElementById(id).checked);
+}
+function calculate(){
+ const {total,values}=getScore();
+ document.getElementById("score").textContent=`${total.toFixed(1).replace(".0","")} / 110`;
+ document.getElementById("bar").style.width=Math.min(total/110*100,100)+"%";
+ let level="Not Certified", cls="none", text="";
+ if(!prerequisitesOK()){
+   text="Certification cannot be concluded because required prerequisites/MPRs are not marked satisfied.";
+ } else if(total>=80){
+   if(platinumOK()){level="Platinum";cls="platinum";text="80+ points and the Platinum-specific requirements entered in this tool are satisfied.";}
+   else {level="Gold*";cls="gold";text="80+ points, but the Platinum-specific requirements entered in this tool are not all satisfied. Review the official v5 requirements before calling this Platinum.";}
+ } else if(total>=60){level="Gold";cls="gold";text="60–79 points with prerequisites satisfied.";}
+ else if(total>=50){level="Silver";cls="silver";text="50–59 points with prerequisites satisfied.";}
+ else if(total>=40){level="Certified";cls="certified";text="40–49 points with prerequisites satisfied.";}
+ else {text="Below the 40-point LEED certification threshold.";}
+ const l=document.getElementById("level");l.textContent=level;l.className="badge "+cls;
+ const green=total>=40 && prerequisitesOK();
+ const g=document.getElementById("green");g.textContent=green?"LEED-qualified green building":"Not LEED-qualified";g.className="badge "+(green?"certified":"none");
+ document.getElementById("greenText").textContent=green?
+ "Meets the score threshold and marked prerequisites in this calculator. Official certification still requires LEED review.":
+ "Does not currently meet the LEED score/prerequisite conditions entered.";
+ const status=document.getElementById("resultStatus");
+ status.className="status "+(green?"green":"red");
+ status.innerHTML=`<b>Assessment:</b> ${text}<br><span class="small">This tool is an educational score calculator, not an official GBCI certification decision.</span>`;
+ const bd=document.getElementById("breakdown");
+ bd.innerHTML=categories.map(c=>`<div style="margin:12px 0"><b>${c.code} — ${c.name}</b>
+ <span style="float:right">${values[c.code]} / ${c.max}</span><div class="progress"><div style="width:${values[c.code]/c.max*100}%"></div></div></div>`).join("");
+}
+function resetApp(){
+ document.getElementById("building").value="";
+ document.getElementById("location").value="";
+ categories.forEach(c=>document.getElementById("p_"+c.code).value=0);
+ checks.forEach(([id])=>document.getElementById(id).checked=false);
+ calculate();
+}
+function downloadReport(){
+ const {total}=getScore();
+ const name=document.getElementById("building").value||"Unnamed Building";
+ const loc=document.getElementById("location").value||"";
+ let lines=[`LEED v5 Building Score Report`,`Building: ${name}`,`Location: ${loc}`,`Score: ${total}/110`,`Certification assessment: ${document.getElementById("level").textContent}`,`Green-building assessment: ${document.getElementById("green").textContent}`,"","Category scores:"];
+ categories.forEach(c=>lines.push(`${c.code} - ${c.name}: ${document.getElementById("p_"+c.code).value}/${c.max}`));
+ lines.push("","Note: This is an educational calculation, not an official LEED certification.");
+ const blob=new Blob([lines.join("\\n")],{type:"text/plain"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=(name.replace(/[^a-z0-9]+/gi,"_")||"leed_report")+"_LEED_v5_Report.txt";a.click();
+}
+calculate();
+</script>
+</body>
+</html>

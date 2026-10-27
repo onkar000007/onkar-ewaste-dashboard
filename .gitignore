@@ -1,0 +1,26 @@
+# Vercel artifacts
+.vercel/
+
+# Node dependencies
+node_modules/
+npm-debug.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# OS and Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
+
+# Redundant duplicate directories (content is active in assets/assignment-files)
+assignments/
+files/
+

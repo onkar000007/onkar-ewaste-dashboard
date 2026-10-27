@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LEED India Vidyalankar Report (1) - Document Viewer</title>
+<style>
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --primary: #2563eb;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --tag-bg: #eff6ff;
+  --tag-text: #1d4ed8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text-main);
+  line-height: 1.65;
+  padding: 18px;
+}
+.preview-container {
+  max-width: 960px;
+  margin: 0 auto;
+  background: var(--surface);
+  border-radius: 14px;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.doc-header {
+  padding: 22px 30px 16px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(to bottom, #ffffff, #fbfcfe);
+}
+.badge-pill {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.doc-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+.doc-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.meta-item strong { color: var(--text-main); }
+.actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 30px;
+  background: #f8fafc;
+  border-bottom: 1px solid var(--border);
+}
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-main);
+  text-decoration: none;
+  cursor: pointer;
+}
+.doc-body {
+  padding: 28px 30px;
+  font-size: 14.5px;
+}
+.doc-body h1 {
+  font-size: 19px;
+  font-weight: 700;
+  margin: 26px 0 10px;
+  color: #1e293b;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 6px;
+}
+.doc-body h2 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 20px 0 8px;
+  color: #334155;
+}
+.doc-body h3 {
+  font-size: 14.5px;
+  font-weight: 600;
+  margin: 14px 0 6px;
+  color: #475569;
+}
+.doc-body p {
+  margin-bottom: 12px;
+  color: #334155;
+  text-align: justify;
+}
+.doc-body ul, .doc-body ol {
+  margin: 10px 0 14px 22px;
+  color: #334155;
+}
+.doc-body li { margin-bottom: 5px; }
+.doc-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+  margin: 16px auto;
+  border: 1px solid var(--border);
+}
+.fig-caption {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: -8px;
+  margin-bottom: 14px;
+}
+.table-wrapper {
+  overflow-x: auto;
+  margin: 16px 0 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+th {
+  background: #f1f5f9;
+  color: #1e293b;
+  font-weight: 600;
+  padding: 9px 12px;
+  border-bottom: 2px solid var(--border);
+}
+td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  color: #334155;
+}
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) td { background: #fafbfc; }
+
+/* Tabs for XLSX */
+.sheet-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 12px 30px;
+  background: #f1f5f9;
+  border-bottom: 1px solid var(--border);
+}
+.sheet-tab {
+  padding: 6px 14px;
+  background: #e2e8f0;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  border: none;
+  color: #334155;
+}
+.sheet-tab.active {
+  background: var(--primary);
+  color: white;
+}
+.sheet-content { display: none; padding: 24px 30px; }
+.sheet-content.active { display: block; }
+</style>
+</head>
+<body>
+<div class="preview-container">
+  <div class="doc-header">
+    <span class="badge-pill">Word Document (.docx)</span>
+    <h1 class="doc-title">LEED India Vidyalankar Report (1)</h1>
+    <div class="doc-meta">
+      <div class="meta-item">Author: <strong>Onkar Shelke</strong> (25102C2002)</div>
+      <div class="meta-item">Semester: <strong>5 (TE CMPN) · VIT Mumbai</strong></div>
+    </div>
+  </div>
+  <div class="actions-bar">
+    <span style="font-size:12px;color:#64748b;">Direct in-dashboard preview · No download needed</span>
+    <div>
+      <a class="btn-action" href="../assignment-files/LEED_India_Vidyalankar_Report (1).docx" download>Download Original</a>
+      <button class="btn-action" onclick="window.print()">Print / PDF</button>
+    </div>
+  </div>
+  <div class="doc-body"><h1>GREEN BUILDING CERTIFICATION IN INDIA</h1><p>The LEED v5 Scorecard, India&#x27;s Verified Platinum Landmarks, and an Independent Review of the Vidyalankar Institute Building</p><p>Prepared: September 2026</p><div class="table-wrapper"><table><tr><th>DOCUMENT INTEGRITY NOTICE<br>Section 1 reproduces the official LEED v5 BD+C credit-category point structure (110-point scale), used as the scoring reference for the rest of this document.<br>Section 2 contains verified, publicly sourced LEED certification data for ten real Indian buildings.<br>Section 3 (Vidyalankar Institute) contains NO official GBCI/USGBC certification or score. It is an independent, self-generated estimate scored against the real Section 1 category weights, for illustrative/academic purposes only. It must not be cited as an actual LEED rating.</th></tr></table></div><h1>1. LEED v5 BD+C Scorecard — Official Credit-Category Reference</h1><p>This is the official LEED v5 (July 2026) Building Design &amp; Construction point structure, covering both New Construction (NC) and Core &amp; Shell (C&amp;S), 110 points total for either path. Every subsequent table and score in this document (Section 3) is benchmarked directly against these category weights.</p><div class="table-wrapper"><table><tr><th>Category</th><th>Credit / Subtopic</th><th>NC Pts</th><th>C&amp;S Pts</th></tr><tr><td>Integrative Process, Planning &amp; Assessments (IP)</td><td>Prerequisites (no points): Climate Resilience Assessment; Human Impact Assessment; Carbon Assessment; Tenant Guidelines</td><td>1</td><td>7</td></tr><tr><td></td><td>Integrative Design Process</td><td>1</td><td>1</td></tr><tr><td></td><td>Green Leases</td><td>–</td><td>6</td></tr><tr><td>Location &amp; Transportation (LT)</td><td></td><td>15</td><td>15</td></tr><tr><td></td><td>Sensitive Land Protection</td><td>1</td><td>1</td></tr><tr><td></td><td>Equitable Development</td><td>2</td><td>2</td></tr><tr><td></td><td>Compact and Connected Development</td><td>6</td><td>6</td></tr><tr><td></td><td>Transportation Demand Management</td><td>4</td><td>4</td></tr><tr><td></td><td>Electric Vehicles</td><td>2</td><td>2</td></tr><tr><td>Sustainable Sites (SS)</td><td>Prerequisite (no points): Minimize Site Disturbance</td><td>11</td><td>11</td></tr><tr><td></td><td>Biodiverse Habitat</td><td>2</td><td>2</td></tr><tr><td></td><td>Accessible Outdoor Space</td><td>1</td><td>1</td></tr><tr><td></td><td>Rainwater Management</td><td>3</td><td>3</td></tr><tr><td></td><td>Enhanced Resilient Site Design</td><td>2</td><td>2</td></tr><tr><td></td><td>Heat Island Reduction</td><td>2</td><td>2</td></tr><tr><td></td><td>Light Pollution Reduction</td><td>1</td><td>1</td></tr><tr><td>Water Efficiency (WE)</td><td>Prerequisites (no points): Water Metering &amp; Reporting; Minimum Water Efficiency</td><td>9</td><td>8</td></tr><tr><td></td><td>Water Metering and Leak Detection</td><td>1</td><td>1</td></tr><tr><td></td><td>Enhanced Water Efficiency</td><td>8</td><td>7</td></tr><tr><td>Energy &amp; Atmosphere (EA)</td><td>Prerequisites (no points): Operational Carbon Projection &amp; Decarb Plan; Minimum Energy Efficiency; Fundamental Commissioning; Energy Metering; Fundamental Refrigerant Mgmt</td><td>33</td><td>27</td></tr><tr><td></td><td>Electrification</td><td>5</td><td>4</td></tr><tr><td></td><td>Reduce Peak Thermal Loads</td><td>5</td><td>5</td></tr><tr><td></td><td>Enhanced Energy Efficiency</td><td>10</td><td>7</td></tr><tr><td></td><td>Renewable Energy</td><td>5</td><td>4</td></tr><tr><td></td><td>Enhanced Commissioning</td><td>4</td><td>3</td></tr><tr><td></td><td>Grid Interactive</td><td>2</td><td>2</td></tr><tr><td></td><td>Enhanced Refrigerant Management</td><td>2</td><td>2</td></tr><tr><td>Materials &amp; Resources (MR)</td><td>Prerequisites (no points): Planning for Zero Waste Ops; Quantify &amp; Assess Embodied Carbon</td><td>18</td><td>21</td></tr><tr><td></td><td>Building and Materials Reuse</td><td>3</td><td>5</td></tr><tr><td></td><td>Reduce Embodied Carbon</td><td>6</td><td>8</td></tr><tr><td></td><td>Low-Emitting Materials</td><td>2</td><td>1</td></tr><tr><td></td><td>Building Product Selection and Procurement</td><td>5</td><td>5</td></tr><tr><td></td><td>Construction and Demolition Waste Diversion</td><td>2</td><td>2</td></tr><tr><td>Indoor Environmental Quality (EQ)</td><td>Prerequisites (no points): Construction Mgmt; Fundamental Air Quality; No Smoking/Idling</td><td>13</td><td>11</td></tr><tr><td></td><td>Enhanced Air Quality</td><td>1</td><td>1</td></tr><tr><td></td><td>Occupant Experience</td><td>7</td><td>7</td></tr><tr><td></td><td>Accessibility and Inclusion</td><td>1</td><td>1</td></tr><tr><td></td><td>Resilient Spaces</td><td>2</td><td>2</td></tr><tr><td></td><td>Air Quality Testing and Monitoring</td><td>2</td><td>–</td></tr><tr><td>Project Priorities (PR)</td><td></td><td>10</td><td>10</td></tr><tr><td></td><td>Project Priorities</td><td>9</td><td>9</td></tr><tr><td></td><td>LEED AP</td><td>1</td><td>1</td></tr><tr><td>TOTAL POSSIBLE POINTS</td><td></td><td>110</td><td>110</td></tr></table></div><p><em>Note: prerequisites are mandatory to certify at any level but carry no points. Certification thresholds on this 110-point scale: Certified 40–49, Silver 50–59, Gold 60–79, Platinum 80+.</em></p><h1>2. Verified LEED-Certified Landmark Buildings in India</h1><p>The table below lists ten real, publicly documented LEED-certified buildings in India, spanning early adopters (2003–2005) through more recent recertifications (2021). Every entry is sourced from public USGBC/GBCI press material or verified media coverage of the certification announcement.</p><div class="table-wrapper"><table><tr><th>#</th><th>Building</th><th>City</th><th>LEED Version / System</th><th>Points</th><th>Certification</th><th>Year</th></tr><tr><td>1</td><td>CII – Sohrabji Godrej Green Business Centre</td><td>Hyderabad</td><td>LEED-NC v2.0</td><td>Not disclosed</td><td>Platinum — first outside the US</td><td>2003</td></tr><tr><td>2</td><td>Wipro Technologies</td><td>Gurgaon</td><td>LEED-NC</td><td>57 points</td><td>Platinum — world&#x27;s largest Platinum building (at the time)</td><td>2005</td></tr><tr><td>3</td><td>ITC Green Centre</td><td>Gurgaon</td><td>LEED-NC</td><td>Not disclosed</td><td>Platinum — first corporate building in India</td><td>2004</td></tr><tr><td>4</td><td>Suzlon One Earth</td><td>Pune</td><td>LEED-NC (also GRIHA 5-Star, 96 pts)</td><td>57 points</td><td>Platinum</td><td>2010</td></tr><tr><td>5</td><td>ITC Grand Chola</td><td>Chennai</td><td>LEED-NC</td><td>Not disclosed</td><td>Platinum — largest hotel to receive it</td><td>2012</td></tr><tr><td>6</td><td>Infosys Campus, Pocharam</td><td>Hyderabad</td><td>LEED India</td><td>Not disclosed</td><td>Platinum</td><td>—</td></tr><tr><td>7</td><td>Infosys Campus</td><td>Mysore</td><td>LEED India</td><td>Not disclosed</td><td>Platinum</td><td>—</td></tr><tr><td>8</td><td>Infinity Benchmark</td><td>Kolkata</td><td>LEED-NC</td><td>Not disclosed</td><td>Platinum — 7th in the world (at the time)</td><td>—</td></tr><tr><td>9</td><td>CESC House</td><td>Kolkata</td><td>LEED O+M</td><td>Not disclosed</td><td>Gold → recertified Platinum 2021 (first heritage bldg. in India)</td><td>2021</td></tr><tr><td>10</td><td>ITC Maurya</td><td>New Delhi</td><td>LEED EBOM</td><td>Not disclosed</td><td>Platinum (built 1977 — one of India&#x27;s oldest certified hotels)</td><td>—</td></tr></table></div><div class="table-wrapper"><table><tr><th>WHY NO CREDIT-BY-CREDIT BREAKDOWN IS SHOWN FOR THESE 10 BUILDINGS<br>1. Version mismatch: all ten buildings were certified under LEED-NC v2.0, LEED India, or LEED O+M/EBOM — not LEED v5 (2026), whose category structure is shown in Section 1. Category weights and maximum points differ substantially between versions (v2.0 topped out at 69 points; v5 tops out at 110), so mapping old scores onto the v5 rubric would mean fabricating numbers.<br>2. Disclosure limits: GBCI publicly releases only the overall point total and certification tier for most projects. Wipro and Suzlon are the two exceptions where a total score (57 pts) is public — but even for these two, no subtopic breakdown exists in the public record.</th></tr></table></div><h1>3. Vidyalankar Institute Building — Independent Sustainability Self-Assessment</h1><div class="table-wrapper"><table><tr><th>WHAT THIS SECTION IS — AND IS NOT<br>The Vidyalankar Institute building has NOT been submitted for, registered under, or awarded any LEED certification. No GBCI scorecard exists. Everything below is a self-generated estimate, scored directly against the official Section 1 category weights, built only from publicly documented architectural design features (site layout, envelope design, orientation) and honest assumptions about what is typically left undocumented in Indian institutional buildings.<br>Where no data exists, this assessment scores LOW — deliberately — rather than assuming credit the building has not demonstrated. Silence in the public record is treated as a gap, not as a hidden strength.</th></tr></table></div><p><em>Methodology: category maximums below are taken directly from the official LEED v5 BD+C New Construction column in Section 1 (Integrative Process 1, Location &amp; Transportation 15, Sustainable Sites 11, Water Efficiency 9, Energy &amp; Atmosphere 33, Materials &amp; Resources 18, Indoor Environmental Quality 13, Project Priorities 10 = 110 total). Each category is then self-scored 0 to max based on documented evidence only.</em></p><div class="table-wrapper"><table><tr><th>LEED v5 Category (official max, NC)</th><th>Max Pts</th><th>Self-Est. Score</th><th>Brutally Honest Reasoning</th></tr><tr><td>Integrative Process (IP)</td><td>1</td><td>0</td><td>No published evidence of a formal Integrative Design Process (early-stage cross-disciplinary goal-setting, energy/water modeling at concept stage). Scored zero — absence of evidence is treated as absence of the credit, not partial credit.</td></tr><tr><td>Location &amp; Transportation (LT)</td><td>15</td><td>6</td><td>Urban infill site (Wadala, Mumbai) plausibly supports Compact and Connected Development and transit access, so this gets partial credit. But there is no documented data on Sensitive Land Protection, Equitable Development, Transportation Demand Management (bike infra, shuttle, EV charging), or actual Electric Vehicle infrastructure — so most of the 15 points stay unearned.</td></tr><tr><td>Sustainable Sites (SS)</td><td>11</td><td>5</td><td>The horizontal, low-rise layout genuinely helps Heat Island Reduction versus a tower footprint. But there is zero public data on Rainwater Management, Biodiverse Habitat, Light Pollution Reduction, or Enhanced Resilient Site Design — so this stays below half.</td></tr><tr><td>Water Efficiency (WE)</td><td>9</td><td>1</td><td>No published information on fixture specifications, flow rates, metering, leak detection, or any water-reuse system. This is the weakest, least-defensible category in the entire assessment — treat it as functionally unscored.</td></tr><tr><td>Energy &amp; Atmosphere (EA)</td><td>33</td><td>9</td><td>Passive design intent (natural ventilation, daylight-oriented perforated skin) plausibly supports Reduce Peak Thermal Loads and some Enhanced Energy Efficiency credit. But there is no EPI, no energy metering data, no Renewable Energy component, no commissioning report, and no refrigerant management disclosure documented anywhere. This is the single largest category in LEED (33 points) and it is almost entirely undocumented here — the biggest point gap in the whole scorecard.</td></tr><tr><td>Materials &amp; Resources (MR)</td><td>18</td><td>2</td><td>The polycarbonate/perforated envelope is described only in architectural terms — no data on embodied carbon, recycled content, regional sourcing, product transparency (EPDs/HPDs), or construction waste diversion. Scored near the floor.</td></tr><tr><td>Indoor Environmental Quality (EQ)</td><td>13</td><td>7</td><td>This is the one category with a genuinely credible story: explicit design intent for daylighting and natural air movement, with the perforated skin doubling as glare control — this plausibly supports Occupant Experience and Enhanced Air Quality credit. Still self-assessed, not measured — no CO2 monitoring or daylight modeling data has been published.</td></tr><tr><td>Project Priorities (PR)</td><td>10</td><td>0</td><td>This category only awards points to buildings actually registered and pursuing LEED, where a regional priority credit set is selected and a LEED AP is on the project team. Since the building has no registration, this is a hard zero by definition — not an estimate.</td></tr><tr><td>TOTAL (estimated)</td><td>110</td><td>30</td><td>≈ 27% — self-estimated only, not GBCI-issued</td></tr></table></div><h2>3.1 Actual Self-Assessed Rating: 30 / 110 points (≈ 27%)</h2><div class="table-wrapper"><table><tr><th>ESTIMATED GRADE: F (Below Certified threshold)  —  ≈ 27%<br>Using the official LEED thresholds (Certified 40–49 pts, Silver 50–59, Gold 60–79, Platinum 80+ on this 110-point scale), this building&#x27;s self-assessed score falls well short of even the base Certified tier.<br>This is not a criticism of the architecture — the passive daylighting and ventilation strategy is a genuine, well-considered design move, and it is the one place this assessment gives real credit. It is a statement about documentation and verification: without published data on water systems, energy performance, and materials sourcing — three of the four heaviest-weighted categories in LEED v5 — a building cannot be credibly scored above &#x27;unproven&#x27;, no matter how good its design intent looks in photographs and press descriptions.</th></tr></table></div><h2>3.2 Brutally Honest Summary</h2><ul><li>Strongest area: Indoor Environmental Quality (7/13) — the natural ventilation and daylighting strategy is real, deliberate, and the only category with a credible, evidence-backed design narrative behind it.</li></ul><ul><li>Weakest area: Water Efficiency (1/9) and Project Priorities (0/10) — the former has zero public data, the latter is a hard zero because the building was never registered with GBCI at all.</li></ul><ul><li>Biggest missed opportunity: Energy &amp; Atmosphere is the single largest category in LEED v5 (33 of 110 points) and remains almost entirely undocumented — no EPI, no metering, no renewables, no commissioning report. This one gap alone accounts for roughly a third of the building&#x27;s total point shortfall.</li></ul><ul><li>Bottom line: good architectural intent is not the same as a verified green building. Until Vidyalankar publishes or commissions actual performance data (energy audits, water audits, materials documentation) and formally registers with GBCI, any &#x27;rating&#x27; — including this one — remains an estimate, not a certification.</li></ul><h1>4. Conclusion</h1><p>India&#x27;s green building movement, as evidenced by the official LEED v5 scorecard structure in Section 1 and the ten verified case studies in Section 2, is neither recent nor marginal — it dates back to 2003 (CII-Godrej GBC, the first Platinum building outside the United States) and has produced repeat, credible achievements across two decades: the world&#x27;s largest Platinum-rated building at the time (Wipro, 2005), India&#x27;s first corporate Platinum building (ITC Green Centre, 2004), the largest Platinum-rated hotel globally (ITC Grand Chola, 2012), and even a 1977-built heritage hotel recertified to Platinum under LEED O+M (ITC Maurya). This is a genuine, internationally significant track record, not isolated PR moments — and it establishes a very high, well-documented bar for what &#x27;green building excellence&#x27; actually looks like in the Indian context: independently verified performance data, third-party audited scorecards, and public certification records that survive scrutiny.</p><p>The Vidyalankar Institute building, assessed in Section 3 against the real LEED v5 category weights from Section 1, does not clear that bar — and the honest, self-assessed estimate of 30/110 (≈ 27%, grade F (Below Certified threshold)) reflects that directly. This is not a failure of imagination or design intent: the horizontal, low-rise layout and the perforated/polycarbonate skin genuinely represent thoughtful passive design thinking around daylight and natural ventilation, and that shows up as the one credible strength in the assessment (Indoor Environmental Quality, 7 of 13 points). But intent is not evidence. Water Efficiency, Energy &amp; Atmosphere, and Materials &amp; Resources — together worth 60 of 110 possible points, more than half the entire v5 scorecard — have essentially no public data behind them, and Project Priorities is a hard zero because the building has never been registered with GBCI. A building cannot be rated as sustainable on the strength of what it might be doing; it has to be rated on what it can prove.</p><p>The core lesson this comparison surfaces is a distinction worth carrying forward: the difference between a green building and a green-looking building is verification, not vocabulary. Every one of the ten Section 2 case studies earned its status through registration, documentation, third-party auditing, and a public scorecard — some of them over two decades before LEED v5 even existed. Vidyalankar, or any institution in its position, has a clear and achievable path to close this gap: commission an energy audit and publish the EPI, document water fixture specifications and any rainwater harvesting infrastructure, disclose materials sourcing and recycled content data, and formally register the project with GBCI rather than relying on architectural description alone. Until that happens, the responsible position — and the one this document takes — is to treat the Vidyalankar building&#x27;s sustainability credentials as promising but unproven, and to resist the temptation, however tempting for a project submission, to dress an estimate up as a certification. Honest scorecards, even unflattering ones, are worth more than borrowed authority.</p><div class="table-wrapper"><table><tr><th>FINAL DISCLOSURE<br>Section 1 data: the official LEED v5 BD+C credit structure — safe to cite as-is.<br>Section 2 data: verified, publicly sourced building certifications — safe to cite.<br>Section 3 rating (F (Below Certified threshold), 30/110, ≈ 27%, self-assessed): NOT an official LEED score. Present it only as an independent design-intent analysis benchmarked against real category weights, never as a GBCI/USGBC-issued certification.</th></tr></table></div></div>
+</div>
+</body>
+</html>

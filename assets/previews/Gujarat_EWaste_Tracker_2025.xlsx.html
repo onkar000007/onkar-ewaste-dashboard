@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gujarat EWaste Tracker 2025 - Spreadsheet Viewer</title>
+<style>
+
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --primary: #2563eb;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --tag-bg: #eff6ff;
+  --tag-text: #1d4ed8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text-main);
+  line-height: 1.65;
+  padding: 18px;
+}
+.preview-container {
+  max-width: 960px;
+  margin: 0 auto;
+  background: var(--surface);
+  border-radius: 14px;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.doc-header {
+  padding: 22px 30px 16px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(to bottom, #ffffff, #fbfcfe);
+}
+.badge-pill {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.doc-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+.doc-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.meta-item strong { color: var(--text-main); }
+.actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 30px;
+  background: #f8fafc;
+  border-bottom: 1px solid var(--border);
+}
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-main);
+  text-decoration: none;
+  cursor: pointer;
+}
+.doc-body {
+  padding: 28px 30px;
+  font-size: 14.5px;
+}
+.doc-body h1 {
+  font-size: 19px;
+  font-weight: 700;
+  margin: 26px 0 10px;
+  color: #1e293b;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 6px;
+}
+.doc-body h2 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 20px 0 8px;
+  color: #334155;
+}
+.doc-body h3 {
+  font-size: 14.5px;
+  font-weight: 600;
+  margin: 14px 0 6px;
+  color: #475569;
+}
+.doc-body p {
+  margin-bottom: 12px;
+  color: #334155;
+  text-align: justify;
+}
+.doc-body ul, .doc-body ol {
+  margin: 10px 0 14px 22px;
+  color: #334155;
+}
+.doc-body li { margin-bottom: 5px; }
+.doc-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+  margin: 16px auto;
+  border: 1px solid var(--border);
+}
+.fig-caption {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: -8px;
+  margin-bottom: 14px;
+}
+.table-wrapper {
+  overflow-x: auto;
+  margin: 16px 0 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+th {
+  background: #f1f5f9;
+  color: #1e293b;
+  font-weight: 600;
+  padding: 9px 12px;
+  border-bottom: 2px solid var(--border);
+}
+td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  color: #334155;
+}
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) td { background: #fafbfc; }
+
+/* Tabs for XLSX */
+.sheet-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 12px 30px;
+  background: #f1f5f9;
+  border-bottom: 1px solid var(--border);
+}
+.sheet-tab {
+  padding: 6px 14px;
+  background: #e2e8f0;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  border: none;
+  color: #334155;
+}
+.sheet-tab.active {
+  background: var(--primary);
+  color: white;
+}
+.sheet-content { display: none; padding: 24px 30px; }
+.sheet-content.active { display: block; }
+
+</style>
+<script>
+function switchSheet(idx) {
+  document.querySelectorAll('.sheet-tab').forEach((t, i) => t.classList.toggle('active', i === idx));
+  document.querySelectorAll('.sheet-content').forEach((c, i) => c.classList.toggle('active', i === idx));
+}
+</script>
+</head>
+<body>
+<div class="preview-container">
+  <div class="doc-header">
+    <span class="badge-pill" style="background:#ecfdf5;color:#047857;">Excel Workbook (.xlsx)</span>
+    <h1 class="doc-title">Gujarat EWaste Tracker 2025</h1>
+    <div class="doc-meta">
+      <div class="meta-item">Author: <strong>Onkar Shelke</strong> (25102C2002)</div>
+      <div class="meta-item">Sheets: <strong>9</strong></div>
+      <div class="meta-item">Semester: <strong>5 · VIT Mumbai</strong></div>
+    </div>
+  </div>
+  <div class="actions-bar">
+    <span style="font-size:12px;color:#64748b;">Direct in-dashboard spreadsheet preview · No download needed</span>
+    <a class="btn-action" href="../assignment-files/Gujarat_EWaste_Tracker_2025.xlsx" download>Download Workbook</a>
+  </div>
+  <div class="sheet-tabs">
+    <button class="sheet-tab active" onclick="switchSheet(0)">0_Scorecard</button><button class="sheet-tab" onclick="switchSheet(1)">Instructions</button><button class="sheet-tab" onclick="switchSheet(2)">1_Generation_Inventory</button><button class="sheet-tab" onclick="switchSheet(3)">2_Collection_Log</button><button class="sheet-tab" onclick="switchSheet(4)">3_Recycling_Infrastructure</button><button class="sheet-tab" onclick="switchSheet(5)">4_Compliance_Tracker</button><button class="sheet-tab" onclick="switchSheet(6)">5_Informal_Sector_Hotspots</button><button class="sheet-tab" onclick="switchSheet(7)">6_Env_Health_Monitoring</button><button class="sheet-tab" onclick="switchSheet(8)">7_Awareness_Programs</button>
+  </div>
+  <div id="sheet_0" class="sheet-content active"><h3 style="margin-bottom:12px;color:#1e293b;">Sheet: 0_Scorecard</h3><div class="table-wrapper"><table><tr><td>State E-Waste Management Scorecard</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Live score out of 100, calculated from the 7 data sheets. Set benchmarks in the yellow &#x27;Target/Benchmark&#x27; cells.</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>STATE SCORE</td><td></td><td>58.4</td><td></td><td>NEEDS IMPROVEMENT</td><td></td><td></td><td></td></tr><tr><td></td><td>#</td><td>Category</td><td>Weight</td><td>Benchmark / Target</td><td>Achieved Value</td><td>Achievement %</td><td>Score Earned</td><td></td></tr><tr><td></td><td>1</td><td>Generation &amp; Inventory</td><td>15</td><td>75</td><td>0</td><td>0</td><td>0</td><td></td></tr><tr><td></td><td>2</td><td>Collection Performance</td><td>20</td><td>1</td><td>0.5269058295964125</td><td>0.5269058295964125</td><td>10.5</td><td></td></tr><tr><td></td><td>3</td><td>Formal Recycling &amp; Treatment</td><td>20</td><td>1</td><td>5.311098654708521</td><td>1</td><td>20</td><td></td></tr><tr><td></td><td>4</td><td>Regulatory Compliance</td><td>15</td><td>1</td><td>0.6</td><td>0.6</td><td>9</td><td></td></tr><tr><td></td><td>5</td><td>Informal Sector Integration</td><td>10</td><td>1</td><td>0.2857142857142857</td><td>0.2857142857142857</td><td>2.9</td><td></td></tr><tr><td></td><td>6</td><td>Environmental &amp; Health Safeguards</td><td>10</td><td>1</td><td>1</td><td>1</td><td>10</td><td></td></tr><tr><td></td><td>7</td><td>Awareness &amp; Outreach</td><td>10</td><td>20</td><td>12</td><td>0.6</td><td>6</td><td></td></tr><tr><td></td><td></td><td>TOTAL SCORE</td><td>100</td><td></td><td></td><td></td><td>58.4</td><td></td></tr><tr><td></td><td>Score Bands:</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>85-100</td><td>Excellent</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>65-84</td><td>Good</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>45-64</td><td>Needs Improvement</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>0-44</td><td>Critical</td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table></div></div><div id="sheet_1" class="sheet-content"><h3 style="margin-bottom:12px;color:#1e293b;">Sheet: Instructions</h3><div class="table-wrapper"><table><tr><td>State E-Waste Management Tracker - Scoring Methodology</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>A 100-point scorecard for monitoring state-level e-waste generation, collection, formal treatment, compliance, and health/environmental safeguards, in line with the E-Waste (Management) Rules, 2022 (CPCB, India).</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>#</td><td>Category</td><td>Weight</td><td>Indicators (data source sheet)</td><td></td><td></td><td></td></tr><tr><td></td><td>1</td><td>Generation &amp; Inventory</td><td>15</td><td>District reporting completeness; category-wise breakup; annual inventory update  -&gt;  &#x27;1_Generation_Inventory&#x27;</td><td></td><td></td><td></td></tr><tr><td></td><td>2</td><td>Collection Performance</td><td>20</td><td>Collection rate (%); collection centers per million population; EPR collection-target achievement  -&gt;  &#x27;2_Collection_Log&#x27;</td><td></td><td></td><td></td></tr><tr><td></td><td>3</td><td>Formal Recycling &amp; Treatment</td><td>20</td><td>% processed by authorized recyclers; installed capacity vs generation; material recovery rate  -&gt;  &#x27;3_Recycling_Infrastructure&#x27;</td><td></td><td></td><td></td></tr><tr><td></td><td>4</td><td>Regulatory Compliance</td><td>15</td><td>% producers/EPR entities compliant; inspections conducted vs planned; penalties resolved  -&gt;  &#x27;4_Compliance_Tracker&#x27;</td><td></td><td></td><td></td></tr><tr><td></td><td>5</td><td>Informal Sector Integration</td><td>10</td><td>% hotspots formalized/remediated; % informal workers registered/trained  -&gt;  &#x27;5_Informal_Sector_Hotspots&#x27;</td><td></td><td></td><td></td></tr><tr><td></td><td>6</td><td>Environmental &amp; Health Safeguards</td><td>10</td><td>% hotspots environmentally monitored; health screening camps conducted  -&gt;  &#x27;6_Env_Health_Monitoring&#x27;</td><td></td><td></td><td></td></tr><tr><td></td><td>7</td><td>Awareness &amp; Outreach</td><td>10</td><td>Awareness campaigns vs target; collection drives vs target  -&gt;  &#x27;7_Awareness_Programs&#x27;</td><td></td><td></td><td></td></tr><tr><td></td><td></td><td>TOTAL</td><td>100</td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>How to use this workbook</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>- Enter data in the 7 numbered sheets (yellow cells = your input). Each sheet has one grey example row - replace/delete it.</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>- Set your benchmarks/targets on the &#x27;0_Scorecard&#x27; sheet (yellow cells) - e.g. collection centers per million population, EPR targets, inspection/campaign targets.</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>- The &#x27;0_Scorecard&#x27; sheet pulls live figures from all 7 sheets and computes the state&#x27;s score out of 100 automatically. Do not overwrite formula cells.</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>- Score bands (customisable on Scorecard): 85-100 Excellent | 65-84 Good | 45-64 Needs Improvement | Below 45 Critical.</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>- Re-run this tracker every quarter/year to monitor trend - copy the Scorecard total into a tracking log for year-on-year comparison.</td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table></div></div><div id="sheet_2" class="sheet-content"><h3 style="margin-bottom:12px;color:#1e293b;">Sheet: 1_Generation_Inventory</h3><div class="table-wrapper"><table><tr><td>Generation Inventory</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>One row per district. Category-wise breakup based on E-Waste (Management) Rules, 2022, Schedule I (simplified).</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>District</td><td>Population</td><td>IT &amp; Telecom (kg)</td><td>Consumer Electrical &amp; Electronics (kg)</td><td>Large &amp; Small Equipment (kg)</td><td>Lighting Equipment (kg)</td><td>Batteries (kg)</td><td>Other (kg)</td><td>Total Generated (kg)</td><td>Date Last Updated</td></tr><tr><td></td><td>Lucknow</td><td>4589000</td><td>210000</td><td>165000</td><td>98000</td><td>22000</td><td>41000</td><td>14000</td><td>550000</td><td>15-03-2025</td></tr><tr><td></td><td>Kanpur Nagar</td><td>4750000</td><td>225000</td><td>172000</td><td>101000</td><td>24000</td><td>43000</td><td>15000</td><td>580000</td><td>20-03-2025</td></tr><tr><td></td><td>Ghaziabad</td><td>5000000</td><td>238000</td><td>181000</td><td>108000</td><td>25000</td><td>46000</td><td>16000</td><td>614000</td><td>10-04-2025</td></tr><tr><td></td><td>Gautam Buddha Nagar</td><td>2200000</td><td>145000</td><td>98000</td><td>52000</td><td>12000</td><td>22000</td><td>8000</td><td>337000</td><td>05-04-2025</td></tr><tr><td></td><td>Agra</td><td>4525000</td><td>205000</td><td>160000</td><td>95000</td><td>21000</td><td>40000</td><td>14000</td><td>535000</td><td>18-04-2025</td></tr><tr><td></td><td>Varanasi</td><td>3800000</td><td>172000</td><td>133000</td><td>79000</td><td>18000</td><td>34000</td><td>12000</td><td>448000</td><td>22-04-2025</td></tr><tr><td></td><td>Meerut</td><td>3600000</td><td>163000</td><td>126000</td><td>75000</td><td>17000</td><td>32000</td><td>11000</td><td>424000</td><td>30-04-2025</td></tr><tr><td></td><td>Prayagraj</td><td>6200000</td><td>255000</td><td>205000</td><td>118000</td><td>27000</td><td>50000</td><td>18000</td><td>673000</td><td>12-05-2025</td></tr><tr><td></td><td>Bareilly</td><td>4650000</td><td>198000</td><td>155000</td><td>92000</td><td>21000</td><td>39000</td><td>13000</td><td>518000</td><td>19-05-2025</td></tr><tr><td></td><td>Moradabad</td><td>4980000</td><td>212000</td><td>165000</td><td>98000</td><td>22000</td><td>41000</td><td>14000</td><td>552000</td><td>25-05-2025</td></tr><tr><td></td><td>Aligarh</td><td>3980000</td><td>170000</td><td>132000</td><td>78000</td><td>18000</td><td>34000</td><td>12000</td><td>444000</td><td>02-06-2025</td></tr><tr><td></td><td>Gorakhpur</td><td>4750000</td><td>203000</td><td>158000</td><td>94000</td><td>21000</td><td>40000</td><td>14000</td><td>530000</td><td>09-06-2025</td></tr><tr><td></td><td>Saharanpur</td><td>3700000</td><td>158000</td><td>122000</td><td>73000</td><td>16000</td><td>31000</td><td>11000</td><td>411000</td><td>16-06-2025</td></tr><tr><td></td><td>Jhansi</td><td>2050000</td><td>88000</td><td>68000</td><td>40000</td><td>9000</td><td>17000</td><td>6000</td><td>228000</td><td>23-06-2025</td></tr><tr><td></td><td>Firozabad</td><td>2600000</td><td>112000</td><td>87000</td><td>51000</td><td>12000</td><td>22000</td><td>8000</td><td>292000</td><td>30-06-2025</td></tr><tr><td></td><td>STATE TOTAL</td><td>61374000</td><td>2754000</td><td>2127000</td><td>1252000</td><td>285000</td><td>532000</td><td>186000</td><td>7136000</td><td></td></tr></table></div></div><div id="sheet_3" class="sheet-content"><h3 style="margin-bottom:12px;color:#1e293b;">Sheet: 2_Collection_Log</h3><div class="table-wrapper"><table><tr><td>Collection Log</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>One row per district. &#x27;Generated&#x27; auto-pulls from Sheet 1 by district name - keep district names identical across sheets.</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>District</td><td>Generated (kg) [from Sheet 1]</td><td>Collected (kg)</td><td>Registered Collection Centers</td><td>EPR Collection Target (kg)</td><td>EPR Collection Achieved (kg)</td><td>Remarks</td></tr><tr><td></td><td>Lucknow</td><td>550000</td><td>285000</td><td>14</td><td>300000</td><td>268000</td><td>Steady rise in formal collection via retailer take-back</td></tr><tr><td></td><td>Kanpur Nagar</td><td>580000</td><td>298000</td><td>15</td><td>320000</td><td>279000</td><td>New collection center opened in Kalyanpur</td></tr><tr><td></td><td>Ghaziabad</td><td>614000</td><td>312000</td><td>18</td><td>340000</td><td>305000</td><td>Strong EPR partner network in NCR belt</td></tr><tr><td></td><td>Gautam Buddha Nagar</td><td>337000</td><td>188000</td><td>11</td><td>200000</td><td>175000</td><td>High per-capita collection due to urban IT hub</td></tr><tr><td></td><td>Agra</td><td>535000</td><td>265000</td><td>13</td><td>280000</td><td>240000</td><td>Tourism-linked electronics returns included</td></tr><tr><td></td><td>Varanasi</td><td>448000</td><td>215000</td><td>10</td><td>240000</td><td>198000</td><td>Collection lags behind generation</td></tr><tr><td></td><td>Meerut</td><td>424000</td><td>208000</td><td>9</td><td>220000</td><td>190000</td><td>RWA-led drives boosted Q2 numbers</td></tr><tr><td></td><td>Prayagraj</td><td>673000</td><td>330000</td><td>16</td><td>350000</td><td>312000</td><td>Large rural catchment slows collection</td></tr><tr><td></td><td>Bareilly</td><td>518000</td><td>248000</td><td>12</td><td>260000</td><td>221000</td><td>Two new EPR-authorized centers added</td></tr><tr><td></td><td>Moradabad</td><td>552000</td><td>268000</td><td>13</td><td>285000</td><td>244000</td><td>Known informal recycling hub - formal share rising</td></tr><tr><td></td><td>Aligarh</td><td>444000</td><td>212000</td><td>10</td><td>225000</td><td>189000</td><td>Lock manufacturing hub, growing e-waste stream</td></tr><tr><td></td><td>Gorakhpur</td><td>530000</td><td>250000</td><td>12</td><td>265000</td><td>226000</td><td>Eastern Gujarat collection network still developing</td></tr><tr><td></td><td>Saharanpur</td><td>411000</td><td>196000</td><td>9</td><td>210000</td><td>171000</td><td>Cross-border trade with Uttarakhand monitored</td></tr><tr><td></td><td>Jhansi</td><td>228000</td><td>108000</td><td>6</td><td>115000</td><td>96000</td><td>Smaller municipal footprint</td></tr><tr><td></td><td>Firozabad</td><td>292000</td><td>140000</td><td>7</td><td>150000</td><td>121000</td><td>Glass/electronics industrial cluster</td></tr><tr><td></td><td>STATE TOTAL</td><td>7136000</td><td>3523000</td><td>175</td><td>3760000</td><td>3235000</td><td></td></tr></table></div></div><div id="sheet_4" class="sheet-content"><h3 style="margin-bottom:12px;color:#1e293b;">Sheet: 3_Recycling_Infrastructure</h3><div class="table-wrapper"><table><tr><td>Recycling Infrastructure</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>One row per CPCB/SPCB-authorized recycler or dismantler operating in the state.</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Recycler / Dismantler Name</td><td>CPCB/SPCB Authorization No.</td><td>District</td><td>Installed Capacity (tonnes/yr)</td><td>Quantity Processed This Year (tonnes)</td><td>Material Recovery Rate (%)</td><td>Authorization Valid Till</td></tr><tr><td></td><td>Ganga Green Recyclers Pvt. Ltd.</td><td>CPCB/EWM/2020/Gujarat-0112</td><td>Ghaziabad</td><td>6500</td><td>4820</td><td>0.84</td><td>31-03-2027</td></tr><tr><td></td><td>Doon Valley E-Waste Solutions</td><td>CPCB/EWM/2019/Gujarat-0087</td><td>Gautam Buddha Nagar</td><td>8200</td><td>6100</td><td>0.86</td><td>30-06-2026</td></tr><tr><td></td><td>Awadh Electronics Recycling Co.</td><td>CPCB/EWM/2021/Gujarat-0205</td><td>Lucknow</td><td>4200</td><td>2950</td><td>0.79</td><td>31-12-2026</td></tr><tr><td></td><td>Yamuna E-Scrap Processors</td><td>CPCB/EWM/2018/Gujarat-0054</td><td>Agra</td><td>3600</td><td>2410</td><td>0.77</td><td>31-03-2026</td></tr><tr><td></td><td>Kanpur Metal &amp; E-Waste Recyclers</td><td>CPCB/EWM/2020/Gujarat-0139</td><td>Kanpur Nagar</td><td>5100</td><td>3680</td><td>0.81</td><td>30-09-2027</td></tr><tr><td></td><td>Purvanchal Recycling Industries</td><td>CPCB/EWM/2022/Gujarat-0261</td><td>Varanasi</td><td>2800</td><td>1650</td><td>0.72</td><td>31-03-2028</td></tr><tr><td></td><td>Rohilkhand Green Dismantlers</td><td>CPCB/EWM/2021/Gujarat-0223</td><td>Bareilly</td><td>2400</td><td>1420</td><td>0.7</td><td>30-06-2027</td></tr><tr><td></td><td>Terai E-Waste Management Ltd.</td><td>CPCB/EWM/2019/Gujarat-0098</td><td>Gorakhpur</td><td>3100</td><td>1890</td><td>0.74</td><td>31-12-2027</td></tr><tr><td></td><td>Braj Bhoomi Electronics Recovery</td><td>CPCB/EWM/2022/Gujarat-0277</td><td>Aligarh</td><td>2000</td><td>1180</td><td>0.68</td><td>31-03-2027</td></tr><tr><td></td><td>STATE TOTAL</td><td></td><td>0</td><td>37900</td><td>2900</td><td></td><td></td></tr></table></div></div><div id="sheet_5" class="sheet-content"><h3 style="margin-bottom:12px;color:#1e293b;">Sheet: 4_Compliance_Tracker</h3><div class="table-wrapper"><table><tr><td>Compliance Tracker</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>One row per registered producer / EPR entity operating in the state.</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Producer / EPR Entity</td><td>EPR Registration No.</td><td>Compliance Status</td><td>Inspection Planned (Y/N)</td><td>Inspection Conducted (Y/N)</td><td>Penalty / Show-Cause Issued (Y/N)</td><td>Penalty Resolved (Y/N)</td><td>Remarks</td></tr><tr><td></td><td>Bharat Consumer Electronics Ltd.</td><td>EPR/2024/Gujarat/00512</td><td>Compliant</td><td>Yes</td><td>Yes</td><td>No</td><td>N/A</td><td>Annual EPR target met (108%)</td></tr><tr><td></td><td>Nova Appliances India Pvt. Ltd.</td><td>EPR/2024/Gujarat/00519</td><td>Compliant</td><td>Yes</td><td>Yes</td><td>No</td><td>N/A</td><td>Target met (101%)</td></tr><tr><td></td><td>Sundar Home Electricals</td><td>EPR/2023/Gujarat/00344</td><td>Non-Compliant</td><td>Yes</td><td>Yes</td><td>Yes</td><td>No</td><td>Show-cause notice issued for shortfall</td></tr><tr><td></td><td>Vertex Telecom Devices Ltd.</td><td>EPR/2024/Gujarat/00527</td><td>Compliant</td><td>Yes</td><td>No</td><td>No</td><td>N/A</td><td>Inspection pending, self-reported compliant</td></tr><tr><td></td><td>Ganga Lighting Solutions</td><td>EPR/2022/Gujarat/00198</td><td>Under Review</td><td>Yes</td><td>Yes</td><td>No</td><td>N/A</td><td>Documentation review in progress</td></tr><tr><td></td><td>Prime Battery Manufacturers</td><td>EPR/2023/Gujarat/00366</td><td>Compliant</td><td>Yes</td><td>Yes</td><td>No</td><td>N/A</td><td>Target met (112%)</td></tr><tr><td></td><td>Skyline Computers &amp; Peripherals</td><td>EPR/2024/Gujarat/00541</td><td>Compliant</td><td>No</td><td>No</td><td>No</td><td>N/A</td><td>Newly registered producer, first cycle</td></tr><tr><td></td><td>Metro Household Appliances</td><td>EPR/2023/Gujarat/00378</td><td>Non-Compliant</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Penalty paid, corrective plan submitted</td></tr><tr><td></td><td>Trident Electronics Manufacturing</td><td>EPR/2022/Gujarat/00210</td><td>Compliant</td><td>Yes</td><td>Yes</td><td>No</td><td>N/A</td><td>Target met (99.5%, within tolerance)</td></tr><tr><td></td><td>Unity Consumer Durables Ltd.</td><td>EPR/2024/Gujarat/00558</td><td>Under Review</td><td>Yes</td><td>No</td><td>No</td><td>N/A</td><td>Inspection scheduled next quarter</td></tr><tr><td></td><td>Compliant</td><td>6</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Total Registered</td><td>10</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Inspections Planned</td><td>9</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Inspections Conducted</td><td>7</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Penalties Issued</td><td>2</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Penalties Resolved</td><td>1</td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table></div></div><div id="sheet_6" class="sheet-content"><h3 style="margin-bottom:12px;color:#1e293b;">Sheet: 5_Informal_Sector_Hotspots</h3><div class="table-wrapper"><table><tr><td>Informal Sector Hotspots</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>One row per known informal e-waste recycling hotspot/cluster in the state.</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Hotspot / Informal Cluster Name</td><td>District</td><td>Status</td><td>Estimated Informal Workers</td><td>Workers Registered / Trained</td><td>Formalization Action Taken</td><td>Remarks</td></tr><tr><td></td><td>Karbala Bypass Scrap Cluster</td><td>Moradabad</td><td>Partially Formalized</td><td>240</td><td>95</td><td>Registered as authorized collection point; 95 workers enrolled in skill program</td><td>Largest informal cluster in the state, remediation ongoing</td></tr><tr><td></td><td>Kabadi Bazaar E-Waste Yard</td><td>Meerut</td><td>Active - Unformalized</td><td>130</td><td>20</td><td>Initial survey completed; formalization pending SPCB approval</td><td>High health-risk site, priority for FY26 action</td></tr><tr><td></td><td>Nai Basti Dismantling Units</td><td>Saharanpur</td><td>Formalized</td><td>75</td><td>75</td><td>Fully registered under state informal-sector integration scheme</td><td>All workers trained and equipped with PPE</td></tr><tr><td></td><td>Ghazipur Road Scrap Market</td><td>Ghaziabad</td><td>Partially Formalized</td><td>165</td><td>60</td><td>Collection agreement signed with two authorized recyclers</td><td>Ongoing negotiations for full formalization</td></tr><tr><td></td><td>Chowk Circuit Recovery Cluster</td><td>Kanpur Nagar</td><td>Active - Unformalized</td><td>110</td><td>15</td><td>Preliminary outreach conducted, no formal registration yet</td><td>Located near residential area, monitoring advised</td></tr><tr><td></td><td>Firozabad Scrap Lane</td><td>Firozabad</td><td>Remediated</td><td>58</td><td>58</td><td>Site remediated; workers absorbed into nearby authorized dismantler</td><td>Closed as informal site as of Q2 2025</td></tr><tr><td></td><td>Loni Border E-Waste Hub</td><td>Ghaziabad</td><td>Active - Unformalized</td><td>190</td><td>25</td><td>Cross-district task force formed with Delhi NCT authorities</td><td>High volume inter-state e-waste inflow</td></tr><tr><td></td><td>Total Hotspots</td><td>7</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Formalized/Remediated</td><td>2</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Estimated Workers (Total)</td><td>968</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Workers Registered/Trained (Total)</td><td>348</td><td></td><td></td><td></td><td></td><td></td></tr></table></div></div><div id="sheet_7" class="sheet-content"><h3 style="margin-bottom:12px;color:#1e293b;">Sheet: 6_Env_Health_Monitoring</h3><div class="table-wrapper"><table><tr><td>Env Health Monitoring</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>One row per environmental monitoring visit or health camp conducted at a hotspot.</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Site / Hotspot Monitored</td><td>District</td><td>Monitoring Type</td><td>Date</td><td>Result</td><td>Health Camp Conducted (Y/N)</td><td>Beneficiaries Screened</td><td>Remarks</td></tr><tr><td></td><td>Karbala Bypass Scrap Cluster</td><td>Moradabad</td><td>Soil + Water</td><td>14-02-2025</td><td>Exceeds Limit (Pb, Cu)</td><td>Yes</td><td>340</td><td>Remediation plan under SPCB review</td></tr><tr><td></td><td>Kabadi Bazaar E-Waste Yard</td><td>Meerut</td><td>Soil + Air</td><td>22-02-2025</td><td>Exceeds Limit (Cd, Pb)</td><td>Yes</td><td>180</td><td>Follow-up screening scheduled Q3 2025</td></tr><tr><td></td><td>Nai Basti Dismantling Units</td><td>Saharanpur</td><td>Soil + Water</td><td>10-03-2025</td><td>Within Limit</td><td>Yes</td><td>95</td><td>Site cleared after formalization</td></tr><tr><td></td><td>Ghazipur Road Scrap Market</td><td>Ghaziabad</td><td>Air</td><td>18-03-2025</td><td>Exceeds Limit (Particulate)</td><td>Yes</td><td>260</td><td>Ventilation improvement advised</td></tr><tr><td></td><td>Chowk Circuit Recovery Cluster</td><td>Kanpur Nagar</td><td>Soil</td><td>05-04-2025</td><td>Exceeds Limit (Pb)</td><td>No</td><td>0</td><td>Health camp planned for next quarter</td></tr><tr><td></td><td>Firozabad Scrap Lane</td><td>Firozabad</td><td>Soil + Water</td><td>20-04-2025</td><td>Within Limit</td><td>Yes</td><td>70</td><td>Post-remediation verification passed</td></tr><tr><td></td><td>Loni Border E-Waste Hub</td><td>Ghaziabad</td><td>Water</td><td>02-05-2025</td><td>Exceeds Limit (Cd)</td><td>Yes</td><td>300</td><td>Joint monitoring with Delhi NCT pollution board</td></tr><tr><td></td><td>Karbala Bypass Scrap Cluster</td><td>Moradabad</td><td>Air</td><td>28-05-2025</td><td>Exceeds Limit (Particulate)</td><td>No</td><td>0</td><td>Second visit of the year, trend monitoring</td></tr><tr><td></td><td>Distinct Sites Monitored</td><td>7</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Health Camps Conducted</td><td>0</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Total Beneficiaries Screened</td><td>0</td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table></div></div><div id="sheet_8" class="sheet-content"><h3 style="margin-bottom:12px;color:#1e293b;">Sheet: 7_Awareness_Programs</h3><div class="table-wrapper"><table><tr><td>Awareness Programs</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>One row per awareness campaign, take-back scheme promotion, or collection drive conducted.</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Program Name</td><td>District</td><td>Date</td><td>Type</td><td>Target Audience</td><td>Participants Reached</td></tr><tr><td></td><td>E-Waste Awareness Drive - Schools</td><td>Lucknow</td><td>22-01-2025</td><td>School Collection Drive</td><td>Students, Grades 6-10</td><td>1450</td></tr><tr><td></td><td>RWA E-Waste Collection Camp</td><td>Ghaziabad</td><td>05-02-2025</td><td>RWA/Community Drive</td><td>Resident Welfare Associations</td><td>890</td></tr><tr><td></td><td>Digital India E-Waste Pledge</td><td>Kanpur Nagar</td><td>14-02-2025</td><td>Public Awareness Campaign</td><td>General Public</td><td>2100</td></tr><tr><td></td><td>College Recycling Challenge</td><td>Varanasi</td><td>01-03-2025</td><td>School Collection Drive</td><td>College Students</td><td>760</td></tr><tr><td></td><td>Radio &amp; Print Media Campaign</td><td>Statewide</td><td>10-03-2025</td><td>Media Campaign</td><td>General Public</td><td>0</td></tr><tr><td></td><td>Market Association Outreach</td><td>Moradabad</td><td>25-03-2025</td><td>RWA/Community Drive</td><td>Traders &amp; Shopkeepers</td><td>540</td></tr><tr><td></td><td>Take-Back Scheme Promotion</td><td>Gautam Buddha Nagar</td><td>08-04-2025</td><td>Public Awareness Campaign</td><td>IT Sector Employees</td><td>1320</td></tr><tr><td></td><td>School Collection Drive - Phase 2</td><td>Agra</td><td>19-04-2025</td><td>School Collection Drive</td><td>Students, Grades 6-10</td><td>980</td></tr><tr><td></td><td>Informal Worker Sensitization Camp</td><td>Saharanpur</td><td>03-05-2025</td><td>Public Awareness Campaign</td><td>Informal Sector Workers</td><td>210</td></tr><tr><td></td><td>RWA Drive - East Zone</td><td>Prayagraj</td><td>17-05-2025</td><td>RWA/Community Drive</td><td>Resident Welfare Associations</td><td>675</td></tr><tr><td></td><td>E-Waste Mela</td><td>Meerut</td><td>01-06-2025</td><td>Public Awareness Campaign</td><td>General Public</td><td>1560</td></tr><tr><td></td><td>Social Media Awareness Push</td><td>Statewide</td><td>15-06-2025</td><td>Media Campaign</td><td>General Public</td><td>0</td></tr><tr><td></td><td>Total Programs Conducted</td><td>12</td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Collection Drives (School+RWA)</td><td>0</td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Total Participants Reached</td><td>0</td><td></td><td></td><td></td><td></td></tr></table></div></div>
+</div>
+</body>
+</html>

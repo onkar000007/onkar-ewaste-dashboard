@@ -1,0 +1,17 @@
+{
+  "name": "onkar-shelke-assignment-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Onkar Shelke (25102C2002) - Semester 5 Coursework & E-Waste Dashboard",
+  "scripts": {
+    "dev": "npx serve",
+    "start": "npx serve"
+  },
+  "keywords": [
+    "e-waste",
+    "coursework",
+    "vit-mumbai",
+    "dashboard"
+  ],
+  "author": "Onkar Shelke"
+}

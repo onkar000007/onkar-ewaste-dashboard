@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Onkar Shelke Carbon Footprint Activity (1) - Spreadsheet Viewer</title>
+<style>
+
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --primary: #2563eb;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --tag-bg: #eff6ff;
+  --tag-text: #1d4ed8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text-main);
+  line-height: 1.65;
+  padding: 18px;
+}
+.preview-container {
+  max-width: 960px;
+  margin: 0 auto;
+  background: var(--surface);
+  border-radius: 14px;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.doc-header {
+  padding: 22px 30px 16px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(to bottom, #ffffff, #fbfcfe);
+}
+.badge-pill {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.doc-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+.doc-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.meta-item strong { color: var(--text-main); }
+.actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 30px;
+  background: #f8fafc;
+  border-bottom: 1px solid var(--border);
+}
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-main);
+  text-decoration: none;
+  cursor: pointer;
+}
+.doc-body {
+  padding: 28px 30px;
+  font-size: 14.5px;
+}
+.doc-body h1 {
+  font-size: 19px;
+  font-weight: 700;
+  margin: 26px 0 10px;
+  color: #1e293b;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 6px;
+}
+.doc-body h2 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 20px 0 8px;
+  color: #334155;
+}
+.doc-body h3 {
+  font-size: 14.5px;
+  font-weight: 600;
+  margin: 14px 0 6px;
+  color: #475569;
+}
+.doc-body p {
+  margin-bottom: 12px;
+  color: #334155;
+  text-align: justify;
+}
+.doc-body ul, .doc-body ol {
+  margin: 10px 0 14px 22px;
+  color: #334155;
+}
+.doc-body li { margin-bottom: 5px; }
+.doc-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+  margin: 16px auto;
+  border: 1px solid var(--border);
+}
+.fig-caption {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: -8px;
+  margin-bottom: 14px;
+}
+.table-wrapper {
+  overflow-x: auto;
+  margin: 16px 0 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+th {
+  background: #f1f5f9;
+  color: #1e293b;
+  font-weight: 600;
+  padding: 9px 12px;
+  border-bottom: 2px solid var(--border);
+}
+td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  color: #334155;
+}
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) td { background: #fafbfc; }
+
+/* Tabs for XLSX */
+.sheet-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 12px 30px;
+  background: #f1f5f9;
+  border-bottom: 1px solid var(--border);
+}
+.sheet-tab {
+  padding: 6px 14px;
+  background: #e2e8f0;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  border: none;
+  color: #334155;
+}
+.sheet-tab.active {
+  background: var(--primary);
+  color: white;
+}
+.sheet-content { display: none; padding: 24px 30px; }
+.sheet-content.active { display: block; }
+
+</style>
+<script>
+function switchSheet(idx) {
+  document.querySelectorAll('.sheet-tab').forEach((t, i) => t.classList.toggle('active', i === idx));
+  document.querySelectorAll('.sheet-content').forEach((c, i) => c.classList.toggle('active', i === idx));
+}
+</script>
+</head>
+<body>
+<div class="preview-container">
+  <div class="doc-header">
+    <span class="badge-pill" style="background:#ecfdf5;color:#047857;">Excel Workbook (.xlsx)</span>
+    <h1 class="doc-title">Onkar Shelke Carbon Footprint Activity (1)</h1>
+    <div class="doc-meta">
+      <div class="meta-item">Author: <strong>Onkar Shelke</strong> (25102C2002)</div>
+      <div class="meta-item">Sheets: <strong>8</strong></div>
+      <div class="meta-item">Semester: <strong>5 · VIT Mumbai</strong></div>
+    </div>
+  </div>
+  <div class="actions-bar">
+    <span style="font-size:12px;color:#64748b;">Direct in-dashboard spreadsheet preview · No download needed</span>
+    <a class="btn-action" href="../assignment-files/Onkar Shelke Carbon Footprint Activity (1).xlsx" download>Download Workbook</a>
+  </div>
+  <div class="sheet-tabs">
+    <button class="sheet-tab active" onclick="switchSheet(0)">Fossil Fuel</button><button class="sheet-tab" onclick="switchSheet(1)">Fugitive</button><button class="sheet-tab" onclick="switchSheet(2)">Electricity</button><button class="sheet-tab" onclick="switchSheet(3)">Water</button><button class="sheet-tab" onclick="switchSheet(4)">Waste</button><button class="sheet-tab" onclick="switchSheet(5)">Travel</button><button class="sheet-tab" onclick="switchSheet(6)">Offset</button><button class="sheet-tab" onclick="switchSheet(7)">Dropdowns</button>
+  </div>
+  <div id="sheet_0" class="sheet-content active"><h3 style="margin-bottom:12px;color:#1e293b;">Sheet: Fossil Fuel</h3><div class="table-wrapper"><table><tr><th>Compulsory</th><th></th><th></th><th></th><th></th><th></th><th></th></tr><tr><td>Optional</td><td></td><td></td><td></td><td>Sanket Jadhav</td><td>24102C0014</td><td></td></tr><tr><td>Either fill this</td><td></td><td></td><td></td><td>Onkar Shelke </td><td>25102C2002</td><td></td></tr><tr><td>Or this</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Don&#x27;t Fill This</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Enter the serial number</td><td>Select the facility name from the dropdown</td><td>Enter the year for this data instance</td><td>Select the month for this data instance</td><td>Select the fuel used from the dropdown</td><td>Select the unit of the fuel used </td><td>Enter the amount of fuel used</td></tr><tr><td>Sr. No.</td><td>Facility Name</td><td>Year</td><td>Month</td><td>Fuel Type</td><td>Unit</td><td>Amount</td></tr><tr><td>Sr. No.</td><td>Facility Name</td><td>Year</td><td>Month</td><td>Fuel Type</td><td>Unit</td><td>Amount</td></tr><tr><td>1</td><td>Maharashtra Freight &amp; Industrial Logistics Aggregate</td><td>2024</td><td>September</td><td>Diesel</td><td>tonne</td><td>742600</td></tr><tr><td>2</td><td>Maharashtra Retail Passenger Mobility Sector</td><td>2024</td><td>September</td><td>Petrol/Gasoline</td><td>tonne</td><td>398500</td></tr><tr><td>3</td><td>Domestic &amp; Commercial Heating Sector</td><td>2024</td><td>September</td><td>LPG</td><td>tonne</td><td>315200</td></tr><tr><td>4</td><td>Mumbai-Pune City Gas Distribution Industrial &amp; Domestic Grid</td><td>2024</td><td>September</td><td>PNG</td><td>cubic metre</td><td>62500000</td></tr><tr><td>5</td><td>Mumbai Metropolitan CNG Station Network</td><td>2024</td><td>September</td><td>CNG</td><td>cubic metre</td><td>54800000</td></tr><tr><td>6</td><td>Chandrapur-Nagpur Mining &amp; Thermal Power Hub</td><td>2024</td><td>September</td><td>Diesel</td><td>tonne</td><td>96700</td></tr><tr><td>7</td><td>Mumbai-Nagothane Petrochemical &amp; Refining Complex</td><td>2024</td><td>September</td><td>PNG</td><td>cubic metre</td><td>24600000</td></tr><tr><td>8</td><td>Mumbai Metropolitan Backup Power Infrastructure</td><td>2024</td><td>September</td><td>Diesel</td><td>tonne</td><td>17800</td></tr></table></div></div><div id="sheet_1" class="sheet-content"><h3 style="margin-bottom:12px;color:#1e293b;">Sheet: Fugitive</h3><div class="table-wrapper"><table><tr><th></th><th>Compulsory</th><th></th><th></th><th></th><th></th></tr><tr><td></td><td>Optional</td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Either fill this</td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Or this</td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Don’t Fill This</td><td></td><td></td><td></td><td></td></tr><tr><td>Enter the serial number</td><td>Select the facility name from the dropdown</td><td>Enter the year for this data instance</td><td>Select the month for this data instance</td><td>Choose The Application Type</td><td>Enter The Number of Units</td></tr><tr><td>Sr. No.</td><td>Facility Name</td><td>Year</td><td>Month</td><td>Application Type</td><td>Number of Units</td></tr><tr><td>1</td><td>Maharashtra State Industrial Facilities Aggregate</td><td>2024</td><td>September</td><td>Heavy Industrial Boilers &amp; Furnaces</td><td>18200</td></tr><tr><td>2</td><td>Mumbai-Pune Commercial Real Estate &amp; IT Hub Infrastructure</td><td>2024</td><td>September</td><td>Standby Diesel Generator Sets</td><td>168000</td></tr><tr><td>3</td><td>Chandrapur, Nagpur &amp; Gondia Mining Complexes</td><td>2024</td><td>September</td><td>Heavy Mining &amp; Earthmoving Machinery</td><td>38500</td></tr><tr><td>4</td><td>State Commercial Hospitality &amp; Institutional Facilities</td><td>2024</td><td>September</td><td>Commercial LPG Kitchen Systems</td><td>112000</td></tr><tr><td>5</td><td>Agricultural Pumping Infrastructure Aggregate</td><td>2024</td><td>September</td><td>Agricultural Diesel Pump Sets</td><td>615000</td></tr><tr><td>6</td><td>Municipal Water &amp; Sewage Pumping Infrastructure</td><td>2024</td><td>September</td><td>High-Capacity Hydraulic Pumping Units</td><td>10600</td></tr></table></div></div><div id="sheet_2" class="sheet-content"><h3 style="margin-bottom:12px;color:#1e293b;">Sheet: Electricity</h3><div class="table-wrapper"><table><tr><th></th><th>Compulsory</th><th></th><th></th><th></th><th></th><th></th><th></th></tr><tr><td></td><td>Either fill this</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Or this</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Don’t Fill This</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Enter the serial number</td><td>Select the facility name from the dropdown</td><td>Enter the year for this data instance</td><td>Enter the month for this data instance</td><td>Select the type of electricity used</td><td>Select the source of production of the used electricity</td><td>Select the unit of used electricity</td><td>Enter the amount of electricity used in the selected unit</td></tr><tr><td>Sr. No.</td><td>Facility Name</td><td>Year</td><td>Month</td><td>Type</td><td>Source</td><td>Unit</td><td>Amount/Quantity</td></tr><tr><td>1</td><td>Maharashtra State Grid Distribution Aggregate</td><td>2024</td><td>September</td><td>Solar</td><td>Self-Produced</td><td>kWH</td><td>3150</td></tr><tr><td>2</td><td>Central Generating Stations Allocation</td><td>2023</td><td>August</td><td>Solar</td><td>Self-Produced</td><td>kWH</td><td>3420</td></tr><tr><td>3</td><td>Non-Conventional Solar Renewable Generation</td><td>2022</td><td>April</td><td>Solar</td><td>Self-Produced</td><td>kWH</td><td>2380</td></tr><tr><td>4</td><td>Non-Conventional Wind Renewable Generation</td><td>2023</td><td>April</td><td>Coal/Thermal</td><td>Self-Produced</td><td>kWH</td><td>1760</td></tr><tr><td>5</td><td>MahaGenco Hydroelectric Assets Aggregate</td><td>2023</td><td>December</td><td>Solar</td><td>Self-Produced</td><td>kWH</td><td>1580</td></tr><tr><td>6</td><td>MSEDCL (Mahavitaran) Distribution Zone</td><td>2023</td><td>July</td><td>Coal/Thermal</td><td>Purchased</td><td>kWH</td><td>2140</td></tr><tr><td>7</td><td>Commercial Rooftop &amp; Captive Solar Generation</td><td>2022</td><td>April</td><td>Coal/Thermal</td><td>Self-Produced</td><td>kWH</td><td>410</td></tr></table></div></div><div id="sheet_3" class="sheet-content"><h3 style="margin-bottom:12px;color:#1e293b;">Sheet: Water</h3><div class="table-wrapper"><table><tr><th></th><th>Compulsory</th><th></th><th></th><th></th><th></th><th></th><th></th></tr><tr><td></td><td>Optional</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Either fill this</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Or this</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Don’t Fill This</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Enter the serial number</td><td>Select the facility name from the dropdown</td><td>Enter the year for this data instance</td><td>Select the month for this data instance</td><td>Select whether the water is supplied or treated</td><td>Select the withdrawal source or the discharged site of the supplied/treated water</td><td>Select the unit of volume</td><td>Enter the quantity</td></tr><tr><td>Sr. No.</td><td>Facility Name</td><td>Year</td><td>Month</td><td>Type</td><td>Withdrawal Source / Discharge Site</td><td>Unit</td><td>Quantity</td></tr><tr><td>1</td><td>BMC Mumbai Municipal Water Network</td><td>2024</td><td>September</td><td>Supplied</td><td>Bhatsa &amp; Tansa Surface Reservoirs</td><td>cubic metre</td><td>52000000</td></tr><tr><td>2</td><td>Maharashtra State Agricultural &amp; Rural Aquifers</td><td>2024</td><td>September</td><td>Supplied</td><td>Deep Borewell / Groundwater Aquifer</td><td>cubic metre</td><td>310000000</td></tr><tr><td>3</td><td>Urban Sewage Treatment Plants Aggregate (STPs)</td><td>2024</td><td>September</td><td>Treated</td><td>Urban STP Discharge &amp; Lakes</td><td>cubic metre</td><td>41000000</td></tr><tr><td>4</td><td>Industrial Effluent Treatment Infrastructure (ETPs)</td><td>2024</td><td>September</td><td>Treated</td><td>Industrial Zone River Discharge Sites</td><td>cubic metre</td><td>14200000</td></tr><tr><td>5</td><td>Konkan Coastal Region Municipal Supply Network</td><td>2024</td><td>September</td><td>Supplied</td><td>Ulhas &amp; Vaitarna Rivers</td><td>cubic metre</td><td>15600000</td></tr><tr><td>6</td><td>Industrial Zero Liquid Discharge (ZLD) Systems</td><td>2024</td><td>September</td><td>Treated</td><td>Recirculated Industrial Facility Water</td><td>cubic metre</td><td>9800000</td></tr></table></div></div><div id="sheet_4" class="sheet-content"><h3 style="margin-bottom:12px;color:#1e293b;">Sheet: Waste</h3><div class="table-wrapper"><table><tr><th></th><th>Compulsory</th><th></th><th></th><th></th><th></th><th></th><th></th></tr><tr><td></td><td>Optional</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Either fill this</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Or this</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Don’t Fill This</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Enter the serial number</td><td>Select the facility name from the dropdown</td><td>Enter the year for this data instance</td><td>Select the month for this data instance</td><td>Select the Waste Type</td><td>Select the Waste Treatment Type</td><td>Select the unit of volume</td><td>Enter the quantity</td></tr><tr><td>Sr. No.</td><td>Facility Name</td><td>Year</td><td>Month</td><td>Waste Type</td><td>Waste Treatment Type</td><td>Unit</td><td>Quantity</td></tr><tr><td>1</td><td>Maharashtra Urban Local Bodies (ULBs) Aggregate</td><td>2023</td><td>December</td><td>Garden Waste</td><td>Landfills</td><td>tonne</td><td>78000</td></tr><tr><td>2</td><td>State Municipal Organic Waste Processing Facilities</td><td>2023</td><td>December</td><td>Garden Waste</td><td>Composting</td><td>tonne</td><td>132000</td></tr><tr><td>3</td><td>Commercial &amp; Industrial Material Recovery Facilities</td><td>2023</td><td>September</td><td>Garden Waste</td><td>Recycling</td><td>tonne</td><td>102000</td></tr><tr><td>4</td><td>Urban Horticulture &amp; Park Management Infrastructure</td><td>2023</td><td>September</td><td>Food and Drink Waste</td><td>Composting</td><td>tonne</td><td>31000</td></tr><tr><td>5</td><td>Industrial Hazardous Waste Incineration Facilities</td><td>2023</td><td>December</td><td>Commercial and Industrial Waste</td><td>Combustion</td><td>tonne</td><td>15600</td></tr><tr><td>6</td><td>Unprocessed Urban Legacy Landfill Operations</td><td>2023</td><td>December</td><td>Food and Drink Waste</td><td>Landfills</td><td>tonne</td><td>58000</td></tr></table></div></div><div id="sheet_5" class="sheet-content"><h3 style="margin-bottom:12px;color:#1e293b;">Sheet: Travel</h3><div class="table-wrapper"><table><tr><th></th><th>Compulsory</th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr><tr><td></td><td>Optional</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Either fill this</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Or this</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Don’t Fill This</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Enter the serial number</td><td>Select the facility name from the dropdown</td><td>Enter the year for this data instance</td><td>Select the month for this data instance</td><td>Select the Mode of Transport</td><td>Select the type of Rail</td><td>Select the Length of Flight</td><td>Select The Vehicle Ownership</td><td>Select The Vehicle Type</td><td>Select The Fuel Type</td><td>Enter the Distance Travelled in KM</td></tr><tr><td>Sr. No.</td><td>Facility Name</td><td>Year</td><td>Month</td><td>Mode of Transport</td><td>Rail Type</td><td>Length of Flight</td><td>Vehicle Ownership</td><td>Vehicle Type</td><td>Fuel Type</td><td>Distance Travelled (KM)</td></tr><tr><td>1</td><td>MSRTC &amp; BEST State Public Road Fleet</td><td>2023</td><td>September</td><td>Roadways</td><td></td><td></td><td>Public</td><td>Bus</td><td></td><td>148000000</td></tr><tr><td>2</td><td>Maharashtra Personal Motorcycle Commuter Segment</td><td>2023</td><td>November</td><td>Roadways</td><td></td><td></td><td>Personal</td><td>Motorcycle</td><td></td><td>10200000</td></tr><tr><td>3</td><td>Urban Personal Private Car Mobility</td><td>2022</td><td>August</td><td>Roadways</td><td></td><td></td><td>Personal</td><td>Small Sized Car</td><td>Petrol/Gasoline</td><td>2650000</td></tr><tr><td>4</td><td>Urban Commercial App-Taxi &amp; Fleet Operations</td><td>2023</td><td>December</td><td>Roadways</td><td></td><td></td><td>Public</td><td>Taxi</td><td></td><td>11800000</td></tr><tr><td>5</td><td>Inter-District Personal Passenger Mobility</td><td>2022</td><td>August</td><td>Roadways</td><td></td><td></td><td>Personal</td><td>Medium Sized Car</td><td>Diesel</td><td>21500000</td></tr><tr><td>6</td><td>Urban Corporate &amp; Electric Fleet Mobility</td><td>2023</td><td>March</td><td>Roadways</td><td></td><td></td><td>Personal</td><td>Large Sized Car</td><td>Electric</td><td>49500000</td></tr><tr><td>7</td><td>Central Railway &amp; Western Railway Network (Maharashtra Zone)</td><td>2022</td><td>May</td><td>Railways</td><td>National Railways</td><td></td><td></td><td></td><td></td><td>51000000</td></tr><tr><td>8</td><td>Domestic Aviation Transit (Mumbai Hub)</td><td>2023</td><td>May</td><td>Airways</td><td></td><td>Domestic</td><td></td><td></td><td></td><td>2250000</td></tr></table></div></div><div id="sheet_6" class="sheet-content"><h3 style="margin-bottom:12px;color:#1e293b;">Sheet: Offset</h3><div class="table-wrapper"><table><tr><th></th><th>Compulsory</th><th></th><th></th><th></th><th></th><th></th><th></th></tr><tr><td></td><td>Optional</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Either fill this</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Or this</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Don’t Fill This</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Enter the serial number</td><td>Select the facility name from the dropdown</td><td>Enter the year for this data instance</td><td>Select the month for this data instance</td><td>Enter the Number of Trees in the Facility</td><td>Enter the Area Covered by Soil(Sq. KM)</td><td>Enter The Area Under Grass(Sq. KM)</td><td>Enter the Area Under Water Bodies(Sq. KM)</td></tr><tr><td>Sr. No.</td><td>Facility Name</td><td>Year</td><td>Month</td><td>Number of Trees</td><td>Area Under Soil</td><td>Area Under Grass</td><td>Area Under Water Bodies</td></tr><tr><td>1</td><td>Western Ghats Forest Division (Sahyadri Region)</td><td>2023</td><td>August</td><td>320000000</td><td>26800</td><td>2100</td><td>1480</td></tr><tr><td>2</td><td>Vidarbha Agricultural &amp; Plains Zone</td><td>2023</td><td>October</td><td>72000000</td><td>78200</td><td>14200</td><td>1650</td></tr><tr><td>3</td><td>Marathwada Rolling Plains &amp; Agro-Forestry</td><td>2023</td><td>December</td><td>68000000</td><td>51300</td><td>7200</td><td>1520</td></tr><tr><td>4</td><td>Konkan Coastal Zone &amp; Mangrove Belt</td><td>2023</td><td>September</td><td>21000000</td><td>5100</td><td>950</td><td>1180</td></tr><tr><td>5</td><td>Greater Mumbai Metropolitan Area</td><td>2022</td><td>June</td><td>1650000</td><td>620</td><td>140</td><td>95</td></tr><tr><td>6</td><td>State Protected Tiger Reserves &amp; National Parks (Melghat, Tadoba)</td><td>2023</td><td>April</td><td>980000000</td><td>11800</td><td>520</td><td>165</td></tr></table></div></div><div id="sheet_7" class="sheet-content"><h3 style="margin-bottom:12px;color:#1e293b;">Sheet: Dropdowns</h3><div class="table-wrapper"><table><tr><th>Household Residue</th><th>Commercial and Industrial Waste</th><th>Food and Drink Waste</th><th>Garden Waste</th><th>Petrol/Gasoline</th><th>LPG</th><th>PNG</th><th>Diesel</th><th>CNG</th></tr><tr><td>Landfills</td><td>Landfills</td><td>Landfills</td><td>Landfills</td><td>tonne</td><td>tonne</td><td>tonne</td><td>tonne</td><td>tonne</td></tr><tr><td>Combustion</td><td>Combustion</td><td>Combustion</td><td>Combustion</td><td>kg</td><td>kg</td><td>kg</td><td>kg</td><td>kg</td></tr><tr><td>Recycling</td><td>Recycling</td><td>Recycling</td><td>Recycling</td><td>cubic metre</td><td>litre</td><td>cubic metre</td><td>litre</td><td>cubic metre</td></tr><tr><td></td><td></td><td>Composting</td><td>Composting</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Public</td><td>Personal</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Bus</td><td>Small Sized Car</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Taxi</td><td>Medium Sized Car</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Large Sized Car</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Motorcycle</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Small Sized Car</td><td>Medium Sized Car</td><td>Large Sized Car</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Petrol/Gasoline</td><td>Petrol/Gasoline</td><td>Petrol/Gasoline</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Diesel</td><td>Diesel</td><td>Diesel</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>Electric</td><td>Electric</td><td>Electric</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td>CNG</td><td>CNG</td><td></td><td></td><td></td><td></td><td></td></tr></table></div></div>
+</div>
+</body>
+</html>

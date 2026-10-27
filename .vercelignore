@@ -1,0 +1,21 @@
+# Vercel deployment ignore rules
+# Prevents uploading redundant duplicates and build scripts
+
+# Redundant duplicate asset folders (served via assets/assignment-files/)
+assignments/
+files/
+
+# Python preview generator script & environments
+build_previews.py
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Editor & OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
